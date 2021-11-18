@@ -42,21 +42,33 @@
 		<header class="main__hero">
 			<h1>Travel Planner</h1>
 		</header>
+
+		<section class="trip-info">
+			<form class="trip-info__form">
+				<label for="tripDestination" class="trip-info__form__loc">
+					My trip to:
+				</label>
+				<input type="text" name="tripDestination" id="tripDestination"
+				class="trip-info__form__loc"> <br><br>
+				<label for="tripStartDate" class="trip-info__form__date">Departing:</label>
+				<input type="date" min="2021-01-01" onfocus="this.min=new Date().toISOString().split('T')[0]" name="tripStartDate" class="tripStartDate"> <br><br>
+				<input type="submit" value="Let's Plan!" class="btn btn--sub">
+			</form>
+		</section>
+
+		<section class="trip-plan">
+			<div class="trip-plan__countdown">
+				<p>Trip to <span id="tripLoc"></span> is <span id="tripDaysToGo"></span> days away</p>
+			</div>
+			<div class="trip-plan__weather">
+				<p>Typical weather for then is:</p>
+				<!-- TODO: Add trip min and max temps -->
+				<p></p>
+				<!-- TODO: Add trip sun/cloud prospects -->
+				<p></p>
+			</div>
+		</section>
 	</main>
-
-	<section class="trip-info">
-		<form class="trip-info__form">
-			<label for="tripDestination" class="trip-info__form__loc">
-				My trip to:
-			</label>
-			<input type="text" name="tripDestination" id="tripDestination"
-			class="trip-info__form__loc"> <br><br>
-			<label for="tripStartDate" class="trip-info__form__date">Departing:</label>
-			<input type="date" min="2021-01-01" onfocus="this.min=new Date().toISOString().split('T')[0]" name="tripStartDate" class="tripStartDate"> <br><br>
-			<input type="submit" value="Let's Plan!" class="btn btn--sub">
-		</form>
-
-	</section>
 	<footer>
 
 	</footer>
