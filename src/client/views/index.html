@@ -11,7 +11,7 @@
 	<!-- TODO: Add keywords for search engine -->
 	<meta name="keywords" content="">
 	<link rel="stylesheet" type="text/css" href="">
-	<title>Capstone Travel App</title>
+	<title>Capstone Travel Planner App</title>
 	<!-- TODO: Create and add a fevicon in .ico format-->
 	<link rel="icon" href="">
 	<!-- FB open graph protocal markup -->
@@ -27,5 +27,37 @@
 	<!-- TODO: Add other icon types -->
 </head>
 <body>
+	<!-- This HTML follows BEM [block]__[element]--[modifier] class naming convention-->
+	<!-- use some-thesis instead of somethesis for class names -->
+	<header class="page__header">
+		<nav class="navbar__menu">
+			<ul class="navbar__list">
+				<!-- TODO: Add nav bar items -->
+			</ul>
+		</nav>
+	</header>
+
+
+	<main>
+		<header class="main__hero">
+			<h1>Travel Planner</h1>
+		</header>
+	</main>
+
+	<section class="trip-info">
+		<form class="trip-info__form">
+			<label for="tripDestination" class="trip-info__form__loc">
+				My trip to:
+			</label>
+			<input type="text" name="tripDestination" id="tripDestination"
+			class="trip-info__form__loc"> <br><br>
+			<label for="tripStartDate" class="trip-info__form__date">Departing:</label>
+			<input type="date" min="2021-01-01" onfocus="this.min=new Date().toISOString().split('T')[0]" name="tripStartDate" class="tripStartDate">
+		</form>
+
+	</section>
+	<footer>
+
+	</footer>
 </body>
 </html>
