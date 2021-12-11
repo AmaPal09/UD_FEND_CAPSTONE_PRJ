@@ -20,10 +20,19 @@ app.use(bodyParser.json());
 app.use(cors());
 
 //SERVER SET-UP
-app.use(express.static('../client/views'));
+app.use(express.static('../client'));
 
 const port = 3100;
 
 app.listen(port, ()=>{
 	console.log(`Server running on port: ${port}`)
+});
+
+// Other variables
+var path = require('path');
+console.log(__dirname)
+/*Routes and get requests*/
+app.get('/', (req,res)=>{
+	// res.send('hello world');
+	res.sendFile(path.resolve('src/client/views/index.html'))
 });
