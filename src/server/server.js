@@ -31,6 +31,7 @@ app.listen(port, ()=>{
 // Other variables
 var path = require('path');
 console.log(__dirname)
+
 /*Routes and get requests*/
 app.get('/', (req,res)=>{
 	// res.send('hello world');
