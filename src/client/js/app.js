@@ -30,6 +30,11 @@ const postData = async(url='', data={}) => {
 
 
 //Functions
+
+function printTripDetails(tripDetails) {
+	console.log(tripDetails);
+}
+
 function validateInputs(destination, date){
 	const result = {};
 
@@ -78,6 +83,7 @@ function submitTripInfoForm(e){
 
 		//Validate trip start date is bigger the current Date
 		const currDate = new Date();
+		currDate.setHours(0,0,0,0); //set time to 0.
 		let futureDate = new Date(tripStartDate+'T00:00');//convert to date in current time zone
 
 		const validDepartureDate = validateFutureDate(futureDate, currDate);
@@ -89,7 +95,8 @@ function submitTripInfoForm(e){
 						destination: tripDestination
 					};
 			const results = postData("/postTrip", tripData);
-			console.log("results are: ", results);
+			// console.log("results are: ", results);
+			printTripDetails(results);
 		}
 		else {
 			console.log("Something went wrong");

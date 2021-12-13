@@ -39,9 +39,12 @@ let tripData = {};
 // OTHER FUNCTIONS
 const postTrip = (req,res)=> {
 	console.log("req has body", req.body);
-	tripData.departureDate = req.body.departDate;
-	tripData.currentDate = req.body.currentDate;
+	tripData.departureDate = new Date(req.body.departDate);
+	tripData.currentDate = new Date(req.body.currentDate);
 	tripData.destination  = req.body.destination;
+	// console.log(typeof(tripData.currentDate));
+	tripData.daysToGo = Math.round((tripData.departureDate.getTime()
+									- tripData.currentDate.getTime())/(1000*3600*24))
 	tripData.message = "POST received"
 	res.send(tripData);
 }
