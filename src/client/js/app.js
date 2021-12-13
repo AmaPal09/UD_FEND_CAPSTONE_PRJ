@@ -33,7 +33,10 @@ const postData = async(url='', data={}) => {
 
 function printTripDetails(tripDetails) {
 	console.log(tripDetails);
+	document.getElementById("tripLoc").innerText = tripDetails.destination;
+	document.getElementById("tripDaysToGo").innerText = tripDetails.daysToGo;
 }
+
 
 function validateInputs(destination, date){
 	const result = {};
@@ -71,6 +74,16 @@ function validateFutureDate(fDate, cDate) {
 }
 
 
+async function postAndPrintTrip(tripData) {
+	const results = await postData("/postTrip", tripData);
+	printTripDetails(results);
+
+	// .then((results) => {
+	// 	printTripDetails(results);
+	// })
+}
+
+
 function submitTripInfoForm(e){
 	e.preventDefault();
 
@@ -94,9 +107,10 @@ function submitTripInfoForm(e){
 						currentDate: currDate,
 						destination: tripDestination
 					};
-			const results = postData("/postTrip", tripData);
-			// console.log("results are: ", results);
-			printTripDetails(results);
+			postAndPrintTrip(tripData);
+			// const results = postData("/postTrip", tripData);
+			// // console.log("results are: ", results);
+			// printTripDetails(results);
 		}
 		else {
 			console.log("Something went wrong");
