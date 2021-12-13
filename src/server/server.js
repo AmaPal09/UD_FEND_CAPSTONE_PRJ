@@ -7,7 +7,7 @@
 const express = require('express');
 const bodyParser = require('body-parser'); //body-parser to parse JSON
 const cors = require('cors'); // Cross-Origin Resource Sharing (CORS)
-
+var path = require('path');
 
 // Basic server configuration
 // Start up an instance of the app
@@ -20,7 +20,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 //SERVER SET-UP
-app.use(express.static('../client'));
+// app.use(express.static('../client'));
+app.use(express.static(path.resolve('src/client/')));
 
 const port = 3100;
 
@@ -29,11 +30,20 @@ app.listen(port, ()=>{
 });
 
 // Other variables
-var path = require('path');
 console.log(__dirname)
+
+
+// OTHER FUNCTIONS
+const postTrip = (res,req)=> {
+	console.log("req has body", req.body);
+	res.send('POST received');
+}
+
 
 /*Routes and get requests*/
 app.get('/', (req,res)=>{
 	// res.send('hello world');
 	res.sendFile(path.resolve('src/client/views/index.html'))
 });
+
+app.post('/postTrip', postTrip);
