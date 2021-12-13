@@ -77,7 +77,6 @@ function submitTripInfoForm(e){
 		console.log(inputsPresent.msg);
 
 		//Validate trip start date is bigger the current Date
-		// console.log(tripStartDate);
 		const currDate = new Date();
 		let futureDate = new Date(tripStartDate+'T00:00');//convert to date in current time zone
 
@@ -89,8 +88,7 @@ function submitTripInfoForm(e){
 						currentDate: currDate,
 						destination: tripDestination
 					};
-			// const results = postData("/postTrip", tripData);
-			const results = postData("/postTrip", {answer: 42});
+			const results = postData("/postTrip", tripData);
 			console.log("results are: ", results);
 		}
 		else {

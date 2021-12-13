@@ -29,14 +29,21 @@ app.listen(port, ()=>{
 	console.log(`Server running on port: ${port}`)
 });
 
-// Other variables
 console.log(__dirname)
 
 
+// Other variables
+let tripData = {};
+
+
 // OTHER FUNCTIONS
-const postTrip = (res,req)=> {
+const postTrip = (req,res)=> {
 	console.log("req has body", req.body);
-	res.send('POST received');
+	tripData.departureDate = req.body.departDate;
+	tripData.currentDate = req.body.currentDate;
+	tripData.destination  = req.body.destination;
+	tripData.message = "POST received"
+	res.send(tripData);
 }
 
 
