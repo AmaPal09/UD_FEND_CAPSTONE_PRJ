@@ -59,13 +59,33 @@ let tripData = {};
 * HELPER FUNCTIONS
 */
 
+/*
+* diffInDates FUNCTION
+* @description: Calculate the difference between 2 dates in number of days
+* @param date1 {date object}: first date (ideally bigger date)
+* @param date2 {date object}: second date (ideally smaller date)
+* @returns: NA
+*/
+const diffInDates = (date1, date2) => {
+	let numDays = 0;
+
+	numDays = Math.round((date1.getTime() - date2.getTime())
+						/(1000*3600*24));
+	if (numDays < 0) {
+		console.log("Please check order of date parameters");
+		return 0;
+	}
+	else {
+		return numDays;
+	}
+}
 
 /*
 * ROUTES and REQUESTS
 */
 
 /*
-* postTrip ASYNC FUNCTION
+* postTrip FUNCTION
 * @description: Process the post request from client side and send
 * 				trip plan details in response
 * @param req: request with details of method and information from client
@@ -78,8 +98,8 @@ const postTrip = (req,res)=> {
 	tripData.currentDate = new Date(req.body.currentDate);
 	tripData.destination  = req.body.destination;
 	// console.log(typeof(tripData.currentDate));
-	tripData.daysToGo = Math.round((tripData.departureDate.getTime()
-									- tripData.currentDate.getTime())/(1000*3600*24))
+	tripData.daysToGo = diffInDates(tripData.departureDate,
+									tripData.currentDate);
 	tripData.message = "POST received"
 	res.send(tripData);
 }
