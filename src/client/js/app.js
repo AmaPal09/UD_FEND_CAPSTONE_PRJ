@@ -1,11 +1,31 @@
-// VARIABLES
+/*
+* V A R I A B L E S
+*/
 
 // Variables for user input
 const generatePlan = document.getElementById('generatePlan');
 
 
-// Routes and requests.
+/*
+*
+* F U N C T I O N S
+*
+*/
+
+/*
+* A P I   R O U T E S   and   R E Q U E S T S
+*/
+
+/*
+* postData ASYNC FUNCTION
+* @description: Makes a post request to the server to
+* 				post data.
+* @param {string} url: url to post to,
+* @param  {object} data: data that is to be posted
+* @returns {json} response: response from the server
+*/
 const postData = async(url='', data={}) => {
+
 	console.log("Enter postTRip function");
 	console.log("URL is: ", url);
 	console.log("Data is: ", data);
@@ -24,23 +44,38 @@ const postData = async(url='', data={}) => {
 	}catch(error){
 		console.log("error: ", error);
 	}
-
 }
 
 
+/*
+* H E L P E R   F U N C T I O N S
+*/
 
-//Functions
-
+/*
+* printTRipDetails FUNCTION
+* @description: Prints details of the trip received from the server to
+* 				the webpage
+* @param: {object} tripDetails: Details of trip to be posted
+* @returns: NA
+*/
 function printTripDetails(tripDetails) {
+
 	console.log(tripDetails);
 	document.getElementById("tripLoc").innerText = tripDetails.destination;
 	document.getElementById("tripDaysToGo").innerText = tripDetails.daysToGo;
 }
 
 
+/*
+* validateInputs FUNCTION
+* @description: Validate that user has provided some input for the trip
+* @param: {string} destination: Trip destination from user
+* @param: {string} date: Trip start date from user
+* @returns: {object} results: Contains Boolean value for if user provided some * 							 input and error messages
+*/
 function validateInputs(destination, date){
-	const result = {};
 
+	const result = {};
 
 	if (destination == "" || date == "") {
 		if(destination == ""){
@@ -62,7 +97,15 @@ function validateInputs(destination, date){
 }
 
 
+/*
+* validateFutureDate FUNCTION
+* @description: Validate that user provided trip start date is in the future 	*				when compared with current date
+* @param: {date} fDate: Trip start date from user
+* @param: {date} cdate: Current date from browser
+* @returns: {Boolean}: true or false
+*/
 function validateFutureDate(fDate, cDate) {
+
 	console.log(fDate);
 	console.log(cDate);
 	if (fDate.getTime() > cDate.getTime()){
@@ -74,52 +117,73 @@ function validateFutureDate(fDate, cDate) {
 }
 
 
+/*
+* postAndPrintTrip ASYNC FUNCTION
+* @description: Sends a post request to the server with trip details
+* 				and call function to print the server feedback
+* @param: {object} tripData: Trip data provided by the user
+* @returns: NA
+*/
 async function postAndPrintTrip(tripData) {
+
 	const results = await postData("/postTrip", tripData);
 	printTripDetails(results);
-
-	// .then((results) => {
-	// 	printTripDetails(results);
-	// })
 }
 
 
+/*
+* submitTripInfoForm FUNCTION
+* @description: Prevents default submit of user data,
+*				Validates user input by calling validateInputs,
+*				Validates user input date by calling validateFutureDate
+* 				Calls postAndPrintTrip
+* @param: {DOM Event} e: DOM event for click on form submit button
+* @returns: NA
+*/
 function submitTripInfoForm(e){
 	e.preventDefault();
 
+	// Get user input
 	const tripDestination = document.getElementById('tripDestination').value;
 	const tripStartDate = document.getElementById('tripStartDate').value;
 
+	// Validate user input for blanks
 	const inputsPresent = validateInputs(tripDestination, tripStartDate);
 	if (inputsPresent.valid) {
 		console.log(inputsPresent.msg);
 
-		//Validate trip start date is bigger the current Date
+		// Date handling
 		const currDate = new Date();
 		currDate.setHours(0,0,0,0); //set time to 0.
 		let futureDate = new Date(tripStartDate+'T00:00');//convert to date in current time zone
 
+		//Validate trip start date is bigger the current Date
 		const validDepartureDate = validateFutureDate(futureDate, currDate);
 		if (validDepartureDate) {
 			console.log('Trip start date is bigger than current Date');
 
-			tripData = { departDate: futureDate,
+			// Compile tripData
+			let tripData = { departDate: futureDate,
 						currentDate: currDate,
 						destination: tripDestination
-					};
+						};
+			// Send details to server
 			postAndPrintTrip(tripData);
-			// const results = postData("/postTrip", tripData);
-			// // console.log("results are: ", results);
-			// printTripDetails(results);
 		}
 		else {
 			console.log("Something went wrong");
 		}
+
 	}
 	else{
-		console.log(result.msg);
+		console.log(inputsPresent.msg);
 	}
 }
 
-//Event Listners
+
+/*
+*
+* E V E N T   L I S T E N E R S
+*
+*/
 generatePlan.addEventListener('click', submitTripInfoForm);

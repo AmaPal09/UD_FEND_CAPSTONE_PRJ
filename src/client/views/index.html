@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<!-- Add FB open graph data metadata properties -->
+<!-- Adds FB open graph data metadata properties -->
 <html lang="en-US" prefix="og: https://ogp.me/ns#">
 <head>
 	<meta charset="utf-8">
-	<!-- TODO: Add author details -->
-	<meta name="author" content="">
+	<meta name="author" content="Amarja Palekar">
 	<!-- TODO: Add description of what the webpage codes -->
 	<meta name="description" content="">
-	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<!-- TODO: Add keywords for search engine -->
 	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="../styles/main.css">
 	<title>Capstone Travel Planner App</title>
 	<!-- TODO: Create and add a fevicon in .ico format-->
@@ -39,23 +38,26 @@
 
 
 	<main>
+		<!-- Move to header section if no nav bar is needed -->
 		<header class="main__hero">
 			<h1>Travel Planner</h1>
 		</header>
 
+		<!-- Form to get trip information -->
 		<section class="trip-info">
 			<form class="trip-info__form">
 				<label for="tripDestination" class="trip-info__form__loc">
 					My trip to:
 				</label>
 				<input type="text" name="tripDestination" id="tripDestination"
-				class="trip-info__form__loc"> <br><br>
+				class="trip-info__form__loc" placeholder="Enter Location"> <br><br>
 				<label for="tripStartDate" class="trip-info__form__date">Departing:</label>
 				<input type="date" min="2021-01-01" onfocus="this.min=new Date().toISOString().split('T')[0]" name="tripStartDate" id="tripStartDate"> <br><br>
 				<input type="submit" value="Let's Plan!" class="btn btn--sub" id="generatePlan">
 			</form>
 		</section>
 
+		<!-- Results for trip planning-->
 		<section class="trip-plan">
 			<div class="trip-plan__countdown">
 				<p>Trip to <span id="tripLoc"></span> is <span id="tripDaysToGo"></span> days away</p>
@@ -69,6 +71,8 @@
 			</div>
 		</section>
 	</main>
+
+
 	<footer>
 		<section class="copyrights">
 			<p class="copyrights__statement">
@@ -76,6 +80,7 @@
 			</p>
 		</section>
 	</footer>
+
 	<!-- ADD apps script -->
 	<script type="text/javascript" src="../js/app.js"></script>
 	<!-- <script type="text/javascript" src="../js/loadtest.js"></script> -->
