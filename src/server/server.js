@@ -84,6 +84,17 @@ const diffInDates = (date1, date2) => {
 * ROUTES and REQUESTS
 */
 
+/* getHomePage FUNCTIPN
+* @description: Process the get request from client side and send
+* 				index page in response
+* @param req: request with details of method and information from client
+* @param res: response sent with details of status and data to client
+* @returns: NA
+*/
+const getHomePage = (req,res)=>{
+	res.sendFile(path.resolve('src/client/views/index.html'))
+}
+
 /*
 * postTrip FUNCTION
 * @description: Process the post request from client side and send
@@ -109,15 +120,10 @@ const postTrip = (req,res)=> {
 * @description: Process get request for home page from client and send home
 * 				page in response
 * @param url {string}: URL for the request
-* @param callback function {function}: Function to execute on route request
-* @param req: request with details of method and information from client
-* @param res: response sent with details of status and data to client
+* @param callback function {function}: getHomePage function to execute on route * 										request
 * @returns: NA
 */
-app.get('/', (req,res)=>{
-	// res.send('hello world');
-	res.sendFile(path.resolve('src/client/views/index.html'))
-});
+app.get('/', getHomePage);
 
 /*
 * post REQUEST
