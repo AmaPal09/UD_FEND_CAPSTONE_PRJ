@@ -78,7 +78,12 @@ function validateInputs(destination, date){
 	const result = {};
 
 	if (destination == "" || date == "") {
-		if(destination == ""){
+		if(destination == "" && date == ""){
+			result['msg'] = "Enter a destination and select a date";
+			result['valid'] = false;
+			return result;
+		}
+		else if(destination == ""){
 			result['msg'] = "Enter a destination";
 			result['valid'] = false;
 			return result;
