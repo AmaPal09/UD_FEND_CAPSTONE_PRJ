@@ -123,4 +123,3 @@ function submitTripInfoForm(e){
 
 //Event Listners
 generatePlan.addEventListener('click', submitTripInfoForm);
-
