@@ -1,7 +1,9 @@
 //Server side JS code
 
 /*
-* ALL REQUIRED PACKAGES
+*
+* A L L   R E Q U I R E D   P A C K A G E S
+*
 */
 //web framework - express to run server and routes
 const express = require('express');
@@ -9,34 +11,67 @@ const bodyParser = require('body-parser'); //body-parser to parse JSON
 const cors = require('cors'); // Cross-Origin Resource Sharing (CORS)
 var path = require('path');
 
-// Basic server configuration
+
+/*
+*
+* S E R V E R   S E T - U P
+*
+*/
+
+/*
+* Basic server configuration
+*/
 // Start up an instance of the app
 const app = express();
 // Configure express to use body parser as middleware
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-
 // Use cors for cross origin allowance. Use cors middleware
 app.use(cors());
 
-//SERVER SET-UP
+// File access setup
 // app.use(express.static('../client'));
 app.use(express.static(path.resolve('src/client/')));
 
+// Port setup
 const port = 3100;
-
 app.listen(port, ()=>{
 	console.log(`Server running on port: ${port}`)
 });
 
 console.log(__dirname)
 
-
-// Other variables
+/*
+*
+* V A R I A L B E S
+*
+*/
 let tripData = {};
 
 
-// OTHER FUNCTIONS
+/*
+*
+* F U N C T I O N S
+*
+*/
+
+/*
+* HELPER FUNCTIONS
+*/
+
+
+/*
+* ROUTES and REQUESTS
+*/
+
+/*
+* postTrip ASYNC FUNCTION
+* @description: Process the post request from client side and send
+* 				trip plan details in response
+* @param req: request with details of method and information from client
+* @param res: response sent with details of status and data to client
+* @returns: NA
+*/
 const postTrip = (req,res)=> {
 	console.log("req has body", req.body);
 	tripData.departureDate = new Date(req.body.departDate);
@@ -49,11 +84,27 @@ const postTrip = (req,res)=> {
 	res.send(tripData);
 }
 
-
-/*Routes and get requests*/
+/*
+* get REQUEST
+* @description: Process get request for home page from client and send home
+* 				page in response
+* @param url {string}: URL for the request
+* @param callback function {function}: Function to execute on route request
+* @param req: request with details of method and information from client
+* @param res: response sent with details of status and data to client
+* @returns: NA
+*/
 app.get('/', (req,res)=>{
 	// res.send('hello world');
 	res.sendFile(path.resolve('src/client/views/index.html'))
 });
 
+/*
+* post REQUEST
+* @description: Process post request from client and call postTrip function
+* @param url {string}: URL for the request
+* @param callback function {function}: postTrip function to execute on route
+* 										request
+* @returns: NA
+*/
 app.post('/postTrip', postTrip);
