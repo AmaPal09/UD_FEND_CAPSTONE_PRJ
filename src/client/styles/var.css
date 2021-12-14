@@ -1,0 +1,24 @@
+* {
+	padding: 0;
+	margin: 0;
+	font-size: 18px;
+	line-height: 1.5;
+	letter-spacing: 0.03rem;
+}
+
+:root{
+	--primary500: #fedb71;
+
+	--secondary500: #f75e86;
+
+	--accent500: #3dc1f4;
+
+	--neutral500: #adbcc4;
+
+
+	--success: #70ac61;
+	--error: #b06764;
+	/*--error: #ac6161;*/
+	--warning: #b08b64;
+	--warning: #ac8761;
+};

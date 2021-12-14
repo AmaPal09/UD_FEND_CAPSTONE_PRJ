@@ -1,0 +1,26 @@
+@import url(var.css);
+
+
+.main__hero {
+	background-color: var(--primary500);
+	padding: 10px;
+	margin: 20px 0 20px 0;
+}
+
+.trip-info {
+	background-color: var(--secondary500);
+	padding: 10px;
+	margin: 20px 0 20px 0;
+}
+
+.trip-plan {
+	background-color: var(--secondary500);
+	padding: 10px;
+	margin: 20px 0 20px 0;
+}
+
+footer {
+	background-color: var(--neutral500);
+	padding: 10px;
+	margin: 20px 0 20px 0;
+}
