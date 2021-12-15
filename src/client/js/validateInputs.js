@@ -5,7 +5,7 @@
 * @param: {string} date: Trip start date from user
 * @returns: {object} results: Contains Boolean value for if user provided some * 							 input and error messages
 */
-const validateInputs = (destination, date) => {
+function validateInputs(destination, date){
 
 	const result = {};
 
