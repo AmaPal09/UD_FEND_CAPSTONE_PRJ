@@ -1,9 +1,12 @@
 // Webpack entry file
 
 // import js scripts
-import { validateInputs } from './js/validateInputs.js'
-
+import { addEvents, submitTripInfoForm } from './js/app.js';
+// import { submitTripInfoForm } from './js/app.js';
 
 alert("Hi there!");
 
-export { validateInputs };
+// console.log(validateInputs);
+addEvents();
+export { addEvents,
+		 submitTripInfoForm };

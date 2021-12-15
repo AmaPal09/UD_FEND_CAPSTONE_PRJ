@@ -7,6 +7,7 @@
 */
 function validateInputs(destination, date){
 
+	console.log("Enter validateInputs()");
 	const result = {};
 
 	if (destination == "" || date == "") {
@@ -33,4 +34,27 @@ function validateInputs(destination, date){
 	}
 }
 
-export {validateInputs}
+
+/*
+* validateFutureDate FUNCTION
+* @description: Validate that user provided trip start date is in the future 	*				when compared with current date
+* @param: {date} fDate: Trip start date from user
+* @param: {date} cdate: Current date from browser
+* @returns: {Boolean}: true or false
+*/
+function validateFutureDate(fDate, cDate) {
+
+	console.log("Enter validateFutureDate()");
+	console.log(fDate);
+	console.log(cDate);
+	if (fDate.getTime() > cDate.getTime()){
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+
+export { validateInputs,
+		 validateFutureDate };

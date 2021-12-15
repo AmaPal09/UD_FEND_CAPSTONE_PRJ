@@ -1,9 +1,16 @@
 /*
+* IMPORTED FILES and FUNCTIONS
+*/
+import { validateInputs } from './inputValidations.js';
+import { validateFutureDate } from './inputValidations.js';
+import { postAndPrintTrip } from './routesNreqs.js';
+
+/*
 * V A R I A B L E S
 */
 
 // Variables for user input
-const generatePlan = document.getElementById('generatePlan');
+
 
 
 /*
@@ -17,126 +24,6 @@ const generatePlan = document.getElementById('generatePlan');
 */
 
 /*
-* postData ASYNC FUNCTION
-* @description: Makes a post request to the server to
-* 				post data.
-* @param {string} url: url to post to,
-* @param  {object} data: data that is to be posted
-* @returns {json} response: response from the server
-*/
-const postData = async(url='', data={}) => {
-
-	console.log("Enter postTRip function");
-	console.log("URL is: ", url);
-	console.log("Data is: ", data);
-	const response = await fetch(url, {
-		method: 'POST',
-		credentials: 'same-origin',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify(data),
-	});
-	try {
-		const results = await response.json();
-		console.log(results);
-		return results;
-	}catch(error){
-		console.log("error: ", error);
-	}
-}
-
-
-/*
-* H E L P E R   F U N C T I O N S
-*/
-
-/*
-* printTRipDetails FUNCTION
-* @description: Prints details of the trip received from the server to
-* 				the webpage
-* @param: {object} tripDetails: Details of trip to be posted
-* @returns: NA
-*/
-function printTripDetails(tripDetails) {
-
-	console.log(tripDetails);
-	document.getElementById("tripLoc").innerText = tripDetails.destination;
-	document.getElementById("tripDaysToGo").innerText = tripDetails.daysToGo;
-}
-
-
-/*
-* validateInputs FUNCTION
-* @description: Validate that user has provided some input for the trip
-* @param: {string} destination: Trip destination from user
-* @param: {string} date: Trip start date from user
-* @returns: {object} results: Contains Boolean value for if user provided some * 							 input and error messages
-*/
-function validateInputs(destination, date){
-
-	const result = {};
-
-	if (destination == "" || date == "") {
-		if(destination == "" && date == ""){
-			result['msg'] = "Enter a destination and select a date";
-			result['valid'] = false;
-			return result;
-		}
-		else if(destination == ""){
-			result['msg'] = "Enter a destination";
-			result['valid'] = false;
-			return result;
-		}
-		else if(date == ""){
-			result['msg'] = "Select a date";
-			result['valid'] = false;
-			return result;
-		}
-	}
-	else {
-		result['valid'] = true;
-		result['msg'] = 'All OK';
-		return result;
-	}
-}
-
-
-/*
-* validateFutureDate FUNCTION
-* @description: Validate that user provided trip start date is in the future 	*				when compared with current date
-* @param: {date} fDate: Trip start date from user
-* @param: {date} cdate: Current date from browser
-* @returns: {Boolean}: true or false
-*/
-function validateFutureDate(fDate, cDate) {
-
-	console.log(fDate);
-	console.log(cDate);
-	if (fDate.getTime() > cDate.getTime()){
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-
-/*
-* postAndPrintTrip ASYNC FUNCTION
-* @description: Sends a post request to the server with trip details
-* 				and call function to print the server feedback
-* @param: {object} tripData: Trip data provided by the user
-* @returns: NA
-*/
-async function postAndPrintTrip(tripData) {
-
-	const results = await postData("/postTrip", tripData);
-	printTripDetails(results);
-}
-
-
-/*
 * submitTripInfoForm FUNCTION
 * @description: Prevents default submit of user data,
 *				Validates user input by calling validateInputs,
@@ -147,6 +34,7 @@ async function postAndPrintTrip(tripData) {
 */
 function submitTripInfoForm(e){
 	e.preventDefault();
+	console.log("Enter submitTripInfoForm()");
 
 	// Get user input
 	const tripDestination = document.getElementById('tripDestination').value;
@@ -191,4 +79,12 @@ function submitTripInfoForm(e){
 * E V E N T   L I S T E N E R S
 *
 */
-generatePlan.addEventListener('click', submitTripInfoForm);
+function addEvents(){
+	console.log("Enter addEvents()");
+	const generatePlan = document.getElementById('generatePlan');
+	generatePlan.addEventListener('click', submitTripInfoForm);
+}
+// generatePlan.addEventListener('click', submitTripInfoForm);
+
+export{ addEvents,
+		submitTripInfoForm};
