@@ -31,7 +31,8 @@ app.use(cors());
 
 // File access setup
 // app.use(express.static('../client'));
-app.use(express.static(path.resolve('src/client/')));
+// app.use(express.static(path.resolve('src/client/')));
+app.use(express.static(path.resolve('dist/')));
 
 // Port setup
 const port = 3100;
@@ -92,7 +93,8 @@ const diffInDates = (date1, date2) => {
 * @returns: NA
 */
 const getHomePage = (req,res)=>{
-	res.sendFile(path.resolve('src/client/views/index.html'))
+	// res.sendFile(path.resolve('src/client/views/index.html'))
+	res.sendFile(path.resolve('dist/index.html'));
 }
 
 /*
