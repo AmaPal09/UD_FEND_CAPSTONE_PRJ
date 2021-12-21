@@ -17,6 +17,15 @@ module.exports = merge(common, {
 	devServer: {
 		static: './dist',
 	},
+	module: {
+		rules: [
+			//Sass
+			{
+				test: /\.scss$/,
+				use: ['style-loader', 'css-loader', 'sass-loader']
+			},
+		]
+	},
 	plugins: [
 		new CleanWebpackPlugin()
 	],

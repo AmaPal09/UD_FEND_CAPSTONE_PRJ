@@ -1,0 +1,42 @@
+// Imported partials, mixis
+@import 'varFormain';
+
+
+// Root styles
+* {
+	padding: 0;
+	margin: 0;
+	margin-block-start: 0;
+    margin-block-end: 0;
+	font-size: 16px;
+	line-height: 1.5;
+	letter-spacing: 0.03rem;
+}
+
+.main__hero {
+	background-color: $primary500;
+	padding: 10px;
+	margin: 0px 0 20px 0;
+}
+
+.trip-info {
+	background-color: $secondary500;
+	padding: 10px;
+	margin: 20px 0 20px 0;
+}
+
+.trip-plan {
+	background-color: $secondary500;
+	padding: 10px;
+	margin: 20px 0 20px 0;
+}
+
+footer {
+	background-color: $neutral500;
+	padding: 10px;
+	margin: 20px 0 20px 0;
+}
+
+.btn {
+	padding: 5px;
+}
