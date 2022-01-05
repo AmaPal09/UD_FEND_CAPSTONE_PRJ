@@ -81,8 +81,8 @@ function submitTripInfoForm(e){
 */
 function addEvents(){
 	console.log("Enter addEvents()");
-	const generatePlan = document.getElementById('generatePlan');
-	generatePlan.addEventListener('click', submitTripInfoForm);
+	// const generatePlan = document.getElementById('generatePlan');
+	// generatePlan.addEventListener('click', submitTripInfoForm);
 }
 // generatePlan.addEventListener('click', submitTripInfoForm);
 
