@@ -5,3 +5,4 @@ reference
 .DS_Store
 src/.DS_Store
 src/client/.DS_Store
+coverage/
