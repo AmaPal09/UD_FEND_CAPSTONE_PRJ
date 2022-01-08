@@ -20,9 +20,7 @@ const dotenv = require('dotenv');
 *
 */
 
-/*
-* Basic server configuration
-*/
+//Basic server configuration
 // Start up an instance of the app
 const app = express();
 // Configure express to use body parser as middleware
@@ -32,17 +30,15 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // File access setup
-// app.use(express.static('../client'));
 // app.use(express.static(path.resolve('src/client/')));
 app.use(express.static(path.resolve('dist/')));
+console.log(__dirname)
 
 // Port setup
 const port = 3100;
 app.listen(port, ()=>{
 	console.log(`Server running on port: ${port}`)
 });
-
-console.log(__dirname)
 
 //Environment setup
 dotenv.config(); //configure env variables
@@ -59,6 +55,7 @@ const GEONAMES_API =
 const GEONAMES_USER = process.env.GEONAMES_USER;
 const WEATHERBIT_API = 'https://api.weatherbit.io/v2.0/forecast/daily?';
 const WEATHERBIT_KEY = process.env.WEATHERBIT_KEY;
+
 
 /*
 *
@@ -83,13 +80,14 @@ const diffInDates = (date1, date2) => {
 	numDays = Math.round((date1.getTime() - date2.getTime())
 						/(1000*3600*24));
 	if (numDays < 0) {
-		console.log("Please check order of date parameters");
+		// console.log("Please check order of date parameters");
 		return 0;
 	}
 	else {
 		return numDays;
 	}
 }
+
 
 /*
 * ROUTES and REQUESTS
@@ -107,6 +105,7 @@ const getHomePage = (req,res)=>{
 	res.sendFile(path.resolve('dist/index.html'));
 }
 
+
 /*
 * postTrip FUNCTION
 * @description: Process the post request from client side and send
@@ -116,7 +115,6 @@ const getHomePage = (req,res)=>{
 * @returns: NA
 */
 const postTrip = async (req,res)=> {
-	// console.log("req has body", req.body);
 	tripData.message = "POST received";
 	tripData.departureDate = new Date(req.body.departDate);
 	tripData.currentDate = new Date(req.body.currentDate);
@@ -128,18 +126,18 @@ const postTrip = async (req,res)=> {
 
 	//Get the latitude and longitude f the trip destination
 	const geonamesDetails = await fetchGeonames(tripData.destination);
-	// console.log(geonamesDetails.geonames[0].lng, geonamesDetails.geonames[0].lat, geonamesDetails.geonames[0].countryName, geonamesDetails.geonames[0].name);
 	tripData.lat = geonamesDetails.geonames[0].lat;
 	tripData.lng = geonamesDetails.geonames[0].lng;
 	tripData.name = geonamesDetails.geonames[0].name;
 	tripData.countryName = geonamesDetails.geonames[0].countryName;
 
+	//Get weather data if trip start within 16 days from current date
 	if (tripData.daysToGo < 17) {
 		const weatherDetails = await fetchWeatherbit(tripData.lat, tripData.lng);
-		// console.log(weatherDetails);
 
 		for(let i=0; i<weatherDetails.data.length; i++) {
 			let departureISODate = tripData.departureDate.toISOString().slice(0,10);
+
 			if (weatherDetails.data[i].valid_date === departureISODate) {
 				console.log(weatherDetails.data[i]);
 				tripData.weather = weatherDetails.data[i];
@@ -166,6 +164,7 @@ const postTrip = async (req,res)=> {
 */
 app.get('/', getHomePage);
 
+
 /*
 * post REQUEST
 * @description: Process post request from client and call postTrip function
@@ -184,8 +183,8 @@ app.post('/postTrip', postTrip);
 * @return {json} newData: location details received from API
 */
 const fetchGeonames = async (destination) => {
-	console.log("Enter fetchGeonames")
-	console.log(destination);
+	// console.log("Enter fetchGeonames")
+	// console.log(destination);
 	const response = await fetch(`${GEONAMES_API}&username=${GEONAMES_USER}&name=${destination}`, {method: 'GET'});
 	try {
 		const geoData = await response.json();
@@ -204,8 +203,8 @@ const fetchGeonames = async (destination) => {
 * @return {json} newData: weather details received from API
 */
 const fetchWeatherbit = async (lat, lng) => {
-	console.log("Enter fetchWeatherbit");
-	console.log(lat, lng);
+	// console.log("Enter fetchWeatherbit");
+	// console.log(lat, lng);
 	console.log(`${WEATHERBIT_API}key=${WEATHERBIT_KEY}&units=I&lat=${lat}&lon=${lng}`)
 	const response = await fetch(`${WEATHERBIT_API}key=${WEATHERBIT_KEY}&units=I&lat=${lat}&lon=${lng}`);
 	try {
