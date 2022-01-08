@@ -47,6 +47,7 @@ console.log(__dirname)
 //Environment setup
 dotenv.config(); //configure env variables
 
+
 /*
 *
 * V A R I A L B E S
@@ -54,8 +55,10 @@ dotenv.config(); //configure env variables
 */
 let tripData = {};
 const GEONAMES_API =
-			'http://api.geonames.org/searchJSON?maxRows=1&style=SHORT';
+			'http://api.geonames.org/searchJSON?maxRows=1&style=MEDIUM';
 const GEONAMES_USER = process.env.GEONAMES_USER;
+const WEATHERBIT_API = 'https://api.weatherbit.io/v2.0/forecast/daily?';
+const WEATHERBIT_KEY = process.env.WEATHERBIT_KEY;
 
 /*
 *
@@ -121,8 +124,17 @@ const postTrip = async (req,res)=> {
 	tripData.daysToGo = diffInDates(tripData.departureDate,
 									tripData.currentDate);
 	tripData.message = "POST received";
+
 	const geonamesDetails = await fetchGeonames(tripData.destination);
-	console.log(geonamesDetails);
+	console.log(geonamesDetails.geonames[0].lng, geonamesDetails.geonames[0].lat, geonamesDetails.geonames[0].countryName, geonamesDetails.geonames[0].name);
+	tripData.lat = geonamesDetails.geonames[0].lat;
+	tripData.lng = geonamesDetails.geonames[0].lng;
+	tripData.name = geonamesDetails.geonames[0].name;
+	tripData.countryName = geonamesDetails.geonames[0].countryName;
+
+	const weatherDetails = await fetchWeatherbit(tripData.lat, tripData.lng);
+	console.log(weatherDetails);
+
 	res.send(tripData);
 }
 
@@ -162,5 +174,25 @@ const fetchGeonames = async (destination) => {
 		return geoData;
 	}catch(error) {
 		console.log("error:", error);
+	}
+}
+
+
+/*
+* fetchWeatherbit FUNCTION
+* @description: Makes a fetch request to weatherbit API
+* @param {string} lat: destination latitude
+* @param {string} lon: destination longitude
+* @return {json} newData: weather details received from API
+*/
+const fetchWeatherbit = async (lat, lng) => {
+	console.log("Enter fetchWeatherbit");
+	console.log(lat, lng);
+	const response = await fetch(`${WEATHERBIT_API}key=${WEATHERBIT_KEY}&units=I&lat=${lat}&lon=${lng}`);
+	try {
+		const weatherData = await response.json();
+		return weatherData;
+	}catch(error) {
+		console.log("error:",error);
 	}
 }
