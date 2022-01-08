@@ -10,6 +10,8 @@ const express = require('express');
 const bodyParser = require('body-parser'); //body-parser to parse JSON
 const cors = require('cors'); // Cross-Origin Resource Sharing (CORS)
 var path = require('path');
+const fetch = require('node-fetch'); //fetch command to access APIs
+const dotenv = require('dotenv');
 
 
 /*
@@ -42,13 +44,18 @@ app.listen(port, ()=>{
 
 console.log(__dirname)
 
+//Environment setup
+dotenv.config(); //configure env variables
+
 /*
 *
 * V A R I A L B E S
 *
 */
 let tripData = {};
-
+const GEONAMES_API =
+			'http://api.geonames.org/searchJSON?maxRows=1&style=SHORT';
+const GEONAMES_USER = process.env.GEONAMES_USER;
 
 /*
 *
@@ -105,7 +112,7 @@ const getHomePage = (req,res)=>{
 * @param res: response sent with details of status and data to client
 * @returns: NA
 */
-const postTrip = (req,res)=> {
+const postTrip = async (req,res)=> {
 	console.log("req has body", req.body);
 	tripData.departureDate = new Date(req.body.departDate);
 	tripData.currentDate = new Date(req.body.currentDate);
@@ -113,7 +120,9 @@ const postTrip = (req,res)=> {
 	// console.log(typeof(tripData.currentDate));
 	tripData.daysToGo = diffInDates(tripData.departureDate,
 									tripData.currentDate);
-	tripData.message = "POST received"
+	tripData.message = "POST received";
+	const geonamesDetails = await fetchGeonames(tripData.destination);
+	console.log(geonamesDetails);
 	res.send(tripData);
 }
 
@@ -136,3 +145,22 @@ app.get('/', getHomePage);
 * @returns: NA
 */
 app.post('/postTrip', postTrip);
+
+
+/*
+* fetchGeonames FUNCTION
+* @description: Makes a fetch request to geonames API
+* @param {string} destination: trip destination whose details are needed
+* @return {json} newData: location details received from API
+*/
+const fetchGeonames = async (destination) => {
+	console.log("Enter fetchGeonames")
+	console.log(destination);
+	const response = await fetch(`${GEONAMES_API}&username=${GEONAMES_USER}&name=${destination}`, {method: 'GET'});
+	try {
+		const geoData = await response.json();
+		return geoData;
+	}catch(error) {
+		console.log("error:", error);
+	}
+}
