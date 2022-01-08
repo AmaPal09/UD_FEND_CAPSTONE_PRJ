@@ -116,27 +116,45 @@ const getHomePage = (req,res)=>{
 * @returns: NA
 */
 const postTrip = async (req,res)=> {
-	console.log("req has body", req.body);
+	// console.log("req has body", req.body);
+	tripData.message = "POST received";
 	tripData.departureDate = new Date(req.body.departDate);
 	tripData.currentDate = new Date(req.body.currentDate);
 	tripData.destination  = req.body.destination;
-	// console.log(typeof(tripData.currentDate));
+
+	//Get the number of days to go before the trip
 	tripData.daysToGo = diffInDates(tripData.departureDate,
 									tripData.currentDate);
-	tripData.message = "POST received";
 
+	//Get the latitude and longitude f the trip destination
 	const geonamesDetails = await fetchGeonames(tripData.destination);
-	console.log(geonamesDetails.geonames[0].lng, geonamesDetails.geonames[0].lat, geonamesDetails.geonames[0].countryName, geonamesDetails.geonames[0].name);
+	// console.log(geonamesDetails.geonames[0].lng, geonamesDetails.geonames[0].lat, geonamesDetails.geonames[0].countryName, geonamesDetails.geonames[0].name);
 	tripData.lat = geonamesDetails.geonames[0].lat;
 	tripData.lng = geonamesDetails.geonames[0].lng;
 	tripData.name = geonamesDetails.geonames[0].name;
 	tripData.countryName = geonamesDetails.geonames[0].countryName;
 
-	const weatherDetails = await fetchWeatherbit(tripData.lat, tripData.lng);
-	console.log(weatherDetails);
+	if (tripData.daysToGo < 17) {
+		const weatherDetails = await fetchWeatherbit(tripData.lat, tripData.lng);
+		// console.log(weatherDetails);
 
+		for(let i=0; i<weatherDetails.data.length; i++) {
+			let departureISODate = tripData.departureDate.toISOString().slice(0,10);
+			if (weatherDetails.data[i].valid_date === departureISODate) {
+				console.log(weatherDetails.data[i]);
+				tripData.weather = weatherDetails.data[i];
+				break;
+			}
+		}
+	}
+	else {
+		tripData.weather = "No forcast for that date is available. Please upto 16 days before the trip"
+	}
+
+	//Send trip data as a response to this post request
 	res.send(tripData);
 }
+
 
 /*
 * get REQUEST
@@ -188,6 +206,7 @@ const fetchGeonames = async (destination) => {
 const fetchWeatherbit = async (lat, lng) => {
 	console.log("Enter fetchWeatherbit");
 	console.log(lat, lng);
+	console.log(`${WEATHERBIT_API}key=${WEATHERBIT_KEY}&units=I&lat=${lat}&lon=${lng}`)
 	const response = await fetch(`${WEATHERBIT_API}key=${WEATHERBIT_KEY}&units=I&lat=${lat}&lon=${lng}`);
 	try {
 		const weatherData = await response.json();
