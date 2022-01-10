@@ -129,6 +129,11 @@ const postTrip = async (req,res)=> {
 	//Get the latitude and longitude f the trip destination
 	const geonamesDetails = await fetchGeonames(tripData.destination);
 	//TODO: Error handling for location not found
+	if (geonamesDetails.totalResultsCount == 0) {
+		tripData.geonamesMSG = "Location not found on geonames";
+		res.send(tripData);
+		return
+	}
 	tripData.lat = geonamesDetails.geonames[0].lat;
 	tripData.lng = geonamesDetails.geonames[0].lng;
 	tripData.name = geonamesDetails.geonames[0].name;
@@ -147,6 +152,9 @@ const postTrip = async (req,res)=> {
 				break;
 			}
 		}
+		if (! tripData.weather) {
+			tripData.weatherMsg = "Weather forcast for this location and these days not found"
+		}
 	}
 	else {
 		tripData.weather = "No forcast for that date is available. Please upto 16 days before the trip"
@@ -154,16 +162,16 @@ const postTrip = async (req,res)=> {
 
 	//Get images from pixabay
 	const imageDetails = await fetchPixabay(tripData.name);
-	if (imageDetails.hits.length > 0) {
+	if (imageDetails.total > 0) {
 		console.log("Images found");
 		tripData.images = imageDetails.hits[1];
 	}
 	else {
 		console.log("Images not found use country instead");
 		const imageDetails = await fetchPixabay(tripData.countryName);
-		if (imageDetails.hits.length <=0) {
-			tripData.images = 'No image found';
-			//TODO: replace above with 1 generic travel image
+		if (imageDetails.total < 1) {
+			tripData.imageMSG = 'No image found';
+			//TODO: replace above with 1 generic travel image on FE
 		}
 		else {
 			tripData.images = imageDetails.hits[1];
