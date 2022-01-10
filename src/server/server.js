@@ -55,6 +55,8 @@ const GEONAMES_API =
 const GEONAMES_USER = process.env.GEONAMES_USER;
 const WEATHERBIT_API = 'https://api.weatherbit.io/v2.0/forecast/daily?';
 const WEATHERBIT_KEY = process.env.WEATHERBIT_KEY;
+const PIXABAY_API='https://pixabay.com/api/?';
+const PIXABAY_KEY=process.env.PIXABAY_KEY;
 
 
 /*
@@ -126,6 +128,7 @@ const postTrip = async (req,res)=> {
 
 	//Get the latitude and longitude f the trip destination
 	const geonamesDetails = await fetchGeonames(tripData.destination);
+	//TODO: Error handling for location not found
 	tripData.lat = geonamesDetails.geonames[0].lat;
 	tripData.lng = geonamesDetails.geonames[0].lng;
 	tripData.name = geonamesDetails.geonames[0].name;
@@ -149,10 +152,27 @@ const postTrip = async (req,res)=> {
 		tripData.weather = "No forcast for that date is available. Please upto 16 days before the trip"
 	}
 
+	//Get images from pixabay
+	const imageDetails = await fetchPixabay(tripData.name);
+	if (imageDetails.hits.length > 0) {
+		console.log("Images found");
+		tripData.images = imageDetails.hits[1];
+	}
+	else {
+		console.log("Images not found use country instead");
+		const imageDetails = await fetchPixabay(tripData.countryName);
+		if (imageDetails.hits.length <=0) {
+			tripData.images = 'No image found';
+			//TODO: replace above with 1 generic travel image
+		}
+		else {
+			tripData.images = imageDetails.hits[1];
+		}
+	}
+
 	//Send trip data as a response to this post request
 	res.send(tripData);
 }
-
 
 /*
 * get REQUEST
@@ -200,16 +220,36 @@ const fetchGeonames = async (destination) => {
 * @description: Makes a fetch request to weatherbit API
 * @param {string} lat: destination latitude
 * @param {string} lon: destination longitude
-* @return {json} newData: weather details received from API
+* @return {json} weatherData: weather details received from API
 */
 const fetchWeatherbit = async (lat, lng) => {
 	// console.log("Enter fetchWeatherbit");
 	// console.log(lat, lng);
-	console.log(`${WEATHERBIT_API}key=${WEATHERBIT_KEY}&units=I&lat=${lat}&lon=${lng}`)
+	// console.log(`${WEATHERBIT_API}key=${WEATHERBIT_KEY}&units=I&lat=${lat}&lon=${lng}`)
 	const response = await fetch(`${WEATHERBIT_API}key=${WEATHERBIT_KEY}&units=I&lat=${lat}&lon=${lng}`);
 	try {
 		const weatherData = await response.json();
 		return weatherData;
+	}catch(error) {
+		console.log("error:",error);
+	}
+}
+
+
+/*
+* fetchPixabay FUNCTION
+* @description: Makes a fetch request to Pixabay API
+* @param {string} name: placename (city/country)
+* @return {json} imageData: image details received from API
+*/
+const fetchPixabay = async (name) => {
+	// console.log("Enter fetchPixabay");
+	// console.log(`${PIXABAY_API}key=${PIXABAY_KEY}&q=${name}&image_type=photo&category=travel&safesearch=true`)
+
+	const response = await fetch(`${PIXABAY_API}key=${PIXABAY_KEY}&q=${name}&image_type=photo&category=travel&safesearch=true`);
+	try {
+		const imageData = await response.json();
+		return imageData;
 	}catch(error) {
 		console.log("error:",error);
 	}
