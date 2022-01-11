@@ -37,8 +37,8 @@ console.log(__dirname)
 // Port setup
 const port = 3100;
 app.listen(port, ()=>{
-	console.log(`Server running on port: ${port}`)
-});
+	console.log(`Server running on port: ${port}`);
+})
 
 //Environment setup
 dotenv.config(); //configure env variables
@@ -229,11 +229,11 @@ const processImageData = async (apiRes,countryName) => {
 		if (apiRes.response.total < 1) {
 			//Look for country images instead
 			console.log("Images not found use country instead");
-			const apiRes2 = await fetchPixabay(tripData.countryName);
+			const apiRes2 = await fetchPixabay(countryName);
 			//API fetch was successful
 			if (apiRes2.received) {
 				//No images available
-				if (aapiRes2.response.total < 1) {
+				if (apiRes2.response.total < 1) {
 					imgData.found = false;
 					imgData.MSG = "No image found for city or country";
 					imgData.imageDetails = {};
@@ -258,7 +258,7 @@ const processImageData = async (apiRes,countryName) => {
 		//City images found
 		else {
 			imgData.found = true;
-			imgData.MSG = "Image found for country";
+			imgData.MSG = "Image found for city";
 			imgData.imageDetails = apiRes.response.hits[0];
 			return imgData
 		}
@@ -316,7 +316,7 @@ const postTrip = async (req,res)=> {
 									tripData.currentDate);
 
 	//Get the latitude and longitude f the trip destination
-	geoAPIrespose = await fetchGeonames(tripData.destination);
+	const geoAPIrespose = await fetchGeonames(tripData.destination);
 	tripData.geonamesDetails = processGeoData(geoAPIrespose);
 	// console.log(tripData.geonamesDetails);
 	if (!tripData.geonamesDetails.found) {
@@ -325,7 +325,7 @@ const postTrip = async (req,res)=> {
 	}
 
 	//Get weather data from weatherbit
-	weatherAPIresponse = await fetchWeatherbit(
+	const weatherAPIresponse = await fetchWeatherbit(
 									tripData.geonamesDetails.geoDetails.lat,
 									tripData.geonamesDetails.geoDetails.lng);
 	tripData.weatherbitDetails = processWeatherData(weatherAPIresponse,
