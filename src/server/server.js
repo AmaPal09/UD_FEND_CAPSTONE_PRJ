@@ -209,6 +209,71 @@ const processWeatherData = (apiRes, daysToGo, departISODate) => {
 
 
 /*
+* processImageData FUNCTION
+* @description: Process api response received from Pixabay API
+* @param {object} apiRes: API response from Pixabay API
+* @returns {object} imgData: Processed response
+* imgData structure
+* imgData = { found: false;
+*			MSG: "Some messge"
+*			imageDetails: {}
+*		}
+*/
+const processImageData = async (apiRes,countryName) => {
+	console.log("processImageData");
+	let imgData = {};
+
+	//API fetch was successful
+	if (apiRes.received) {
+		//No images available
+		if (apiRes.response.total < 1) {
+			//Look for country images instead
+			console.log("Images not found use country instead");
+			const apiRes2 = await fetchPixabay(tripData.countryName);
+			//API fetch was successful
+			if (apiRes2.received) {
+				//No images available
+				if (aapiRes2.response.total < 1) {
+					imgData.found = false;
+					imgData.MSG = "No image found for city or country";
+					imgData.imageDetails = {};
+					return imgData;
+				}
+				//Country images found
+				else {
+					imgData.found = true;
+					imgData.MSG = "Images found for country";
+					imgData.imageDetails = apiRes2.response.hits[0];
+					return imgData;
+				}
+			}
+			//API fetch unsuccessful
+			else{
+				imgData.found = false;
+				imgData.MSG = apiRes2.response;
+				imgData.imageDetails = {};
+				return imgData
+			}
+		}
+		//City images found
+		else {
+			imgData.found = true;
+			imgData.MSG = "Image found for country";
+			imgData.imageDetails = apiRes.response.hits[0];
+			return imgData
+		}
+	}
+	//API fetch unsuccessful
+	else {
+		imgData.found = false;
+		imgData.MSG = apiRes.response;
+		imgData.imageDetails = {};
+		return imgData
+	}
+}
+
+
+/*
 * ROUTES and REQUESTS
 */
 
@@ -259,6 +324,7 @@ const postTrip = async (req,res)=> {
 		return
 	}
 
+	//Get weather data from weatherbit
 	weatherAPIresponse = await fetchWeatherbit(
 									tripData.geonamesDetails.geoDetails.lat,
 									tripData.geonamesDetails.geoDetails.lng);
@@ -266,6 +332,13 @@ const postTrip = async (req,res)=> {
 													tripData.daysToGo,
 													tripData.departISODate);
 
+	//Get images from pixabay
+	const pixabayAPIresponse = await fetchPixabay(
+									tripData.geonamesDetails.geoDetails.name);
+	tripData.pixabayDetails = await processImageData(
+							pixabayAPIresponse,
+							tripData.geonamesDetails.geoDetails.countryName);
+	/*
 	//Get images from pixabay
 	const imageDetails = await fetchPixabay(
 								tripData.geonamesDetails.geoDetails.name);
@@ -284,7 +357,7 @@ const postTrip = async (req,res)=> {
 			tripData.images = imageDetails.hits[1];
 		}
 	}
-
+	*/
 	//Send trip data as a response to this post request
 	res.send(tripData);
 }
@@ -356,7 +429,7 @@ const fetchWeatherbit = async (lat, lng) => {
 		apiRes.received = true;
 		return apiRes;
 	}catch(error) {
-		console.log("error:",error);
+		console.log("error:", error);
 		apiRes.received = false;
 		apiRes.response = error;
 		return apiRes;
@@ -372,12 +445,17 @@ const fetchWeatherbit = async (lat, lng) => {
 */
 const fetchPixabay = async (name) => {
 	console.log("Enter fetchPixabay");
+	let apiRes = {};
+
 	console.log(`${PIXABAY_API}key=${PIXABAY_KEY}&q=${name}&image_type=photo&category=travel&safesearch=true`)
 	const response = await fetch(`${PIXABAY_API}key=${PIXABAY_KEY}&q=${name}&image_type=photo&category=travel&safesearch=true`);
 	try {
-		const imageData = await response.json();
-		return imageData;
+		apiRes.response = await response.json();
+		apiRes.received = true;
+		return apiRes;
 	}catch(error) {
-		console.log("error:",error);
+		console.log("error:", error);
+		apiRes.received = false;
+		apiRes.response = error;
 	}
 }
