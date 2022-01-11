@@ -72,8 +72,8 @@ const PIXABAY_KEY=process.env.PIXABAY_KEY;
 /*
 * diffInDates FUNCTION
 * @description: Calculate the difference between 2 dates in number of days
-* @param date1 {date object}: first date (ideally bigger date)
-* @param date2 {date object}: second date (ideally smaller date)
+* @param {date object} date1: first date (ideally bigger date)
+* @param {date object} date2: second date (ideally smaller date)
 * @returns: NA
 */
 const diffInDates = (date1, date2) => {
@@ -92,15 +92,20 @@ const diffInDates = (date1, date2) => {
 }
 
 
+/*
+* processGeoData FUNCTION
+* @description: Process api response received from Geonames API
+* @param {object} apiRes: API response from Geonames API
+* @returns {object} geoData: Processed response
+* geoData structure
+* geoData = { found: false;
+*			MSG: "Some messge"
+*			geoDetails: {}
+*		}
+*/
 const processGeoData = (apiRes) => {
 	console.log("processGeoData");
 	let geoData = {};
-	/*
-	geoData = { found: false;
-				MSG: "Some messge"
-				geoDetails: {}
-			}
-	*/
 
 	//If api fetch was successful
 	if (apiRes.received) {
@@ -133,15 +138,22 @@ const processGeoData = (apiRes) => {
 }
 
 
+/*
+* processWeatherData FUNCTION
+* @description: Process API response from Weatherbit API
+* @param {object} apiRes: API response received from weatherbit API
+* @param {numeric} daysToGo: Number of days to go for the trip
+* @param {string} departISODate:  Departure date in ISO format
+* @returns {object} weaData: Processed response
+* weaData structure
+* weaData = {found: true,
+*			MSG: "some message",
+*			weather: {}
+*		}
+*/
 const processWeatherData = (apiRes, daysToGo, departISODate) => {
 	console.log("processWeatherData");
 	let weaData = {};
-	/*
-	weaData = {found: true,
-				MSG: "some message",
-				weather: {}
-			}
-	*/
 	if (apiRes.received) {
 		//If is trip is less than 17 days away, then match dates for forecast
 		if (daysToGo < 17) {
@@ -195,11 +207,12 @@ const processWeatherData = (apiRes, daysToGo, departISODate) => {
 	}
 }
 
+
 /*
 * ROUTES and REQUESTS
 */
 
-/* getHomePage FUNCTIPN
+/* getHomePage FUNCTION
 * @description: Process the get request from client side and send
 * 				index page in response
 * @param req: request with details of method and information from client
@@ -214,7 +227,7 @@ const getHomePage = (req,res)=>{
 
 
 /*
-* postTrip FUNCTION
+* postTrip ASYNC FUNCTION
 * @description: Process the post request from client side and send
 * 				trip plan details in response
 * @param req: request with details of method and information from client
@@ -252,14 +265,7 @@ const postTrip = async (req,res)=> {
 	tripData.weatherbitDetails = processWeatherData(weatherAPIresponse,
 													tripData.daysToGo,
 													tripData.departISODate);
-	/*
-	//Get weather data if trip start within 16 days from current date
-	tripData.weatherbitDetails = await fetchWeatherbit(
-									tripData.geonamesDetails.lat,
-									tripData.geonamesDetails.lng,
-									tripData.daysToGo,
-									tripData.departISODate);
-	*/
+
 	//Get images from pixabay
 	const imageDetails = await fetchPixabay(
 								tripData.geonamesDetails.geoDetails.name);
@@ -283,12 +289,13 @@ const postTrip = async (req,res)=> {
 	res.send(tripData);
 }
 
+
 /*
 * get REQUEST
 * @description: Process get request for home page from client and send home
 * 				page in response
-* @param url {string}: URL for the request
-* @param callback function {function}: getHomePage function to execute on route * 										request
+* @param {string} url: URL for the request
+* @param {function} callback function: getHomePage function to execute on      * 									 route request
 * @returns: NA
 */
 app.get('/', getHomePage);
@@ -297,8 +304,8 @@ app.get('/', getHomePage);
 /*
 * post REQUEST
 * @description: Process post request from client and call postTrip function
-* @param url {string}: URL for the request
-* @param callback function {function}: postTrip function to execute on route
+* @param {string} url: URL for the request
+* @param {function} callback function: postTrip function to execute on route
 * 										request
 * @returns: NA
 */
@@ -306,14 +313,13 @@ app.post('/postTrip', postTrip);
 
 
 /*
-* fetchGeonames FUNCTION
+* fetchGeonames ASYNC FUNCTION
 * @description: Makes a fetch request to geonames API
 * @param {string} destination: trip destination whose details are needed
-* @return {json} newData: location details received from API
+* @return {object} apiRes: location details received from API
 */
 const fetchGeonames = async (destination) => {
 	console.log("Enter fetchGeonames");
-	//TODO: Error handling for location not found
 	let apiRes = { };
 
 	//Fetch from API
@@ -332,23 +338,20 @@ const fetchGeonames = async (destination) => {
 
 
 /*
-* fetchWeatherbit FUNCTION
+* fetchWeatherbit ASYNC FUNCTION
 * @description: Makes a fetch request to weatherbit API
 * @param {string} lat: destination latitude
 * @param {string} lon: destination longitude
-* @return {json} weatherData: weather details received from API
+* @return {object} apiRes: weather details received from API
 */
 const fetchWeatherbit = async (lat, lng) => {
 	console.log("Enter fetchWeatherbit");
-	// console.log(lat, lng);
-	// console.log(`${WEATHERBIT_API}key=${WEATHERBIT_KEY}&units=I&lat=${lat}&lon=${lng}`)
 
 	let apiRes = { };
 
 	//Fetch from API
 	const response = await fetch(`${WEATHERBIT_API}key=${WEATHERBIT_KEY}&units=I&lat=${lat}&lon=${lng}`);
 	try {
-		// process resonse from API
 		apiRes.response = await response.json();
 		apiRes.received = true;
 		return apiRes;
@@ -362,7 +365,7 @@ const fetchWeatherbit = async (lat, lng) => {
 
 
 /*
-* fetchPixabay FUNCTION
+* fetchPixabay ASYNC FUNCTION
 * @description: Makes a fetch request to Pixabay API
 * @param {string} name: placename (city/country)
 * @return {json} imageData: image details received from API
