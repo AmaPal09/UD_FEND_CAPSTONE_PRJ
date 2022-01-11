@@ -77,6 +77,7 @@ const PIXABAY_KEY=process.env.PIXABAY_KEY;
 * @returns: NA
 */
 const diffInDates = (date1, date2) => {
+	console.log("diffInDates");
 	let numDays = 0;
 
 	numDays = Math.round((date1.getTime() - date2.getTime())
@@ -91,6 +92,109 @@ const diffInDates = (date1, date2) => {
 }
 
 
+const processGeoData = (apiRes) => {
+	console.log("processGeoData");
+	let geoData = {};
+	/*
+	geoData = { found: false;
+				MSG: "Some messge"
+				geoDetails: {}
+			}
+	*/
+
+	//If api fetch was successful
+	if (apiRes.received) {
+		//No location found
+		if (apiRes.response.totalResultsCount == 0) {
+			geoData.found = false;
+			geoData.MSG = "Location not found on geonames";
+			geoData.geoDetails = {};
+			return geoData;
+		}
+		//location found
+		else {
+			geoData.found = true;
+			geoData.MSG = "Record found for location";
+			geoData.geoDetails = {};
+			geoData.geoDetails.lat = apiRes.response.geonames[0].lat;
+			geoData.geoDetails.lng = apiRes.response.geonames[0].lng;
+			geoData.geoDetails.name = apiRes.response.geonames[0].name;
+			geoData.geoDetails.countryName = apiRes.response.geonames[0].countryName;
+			return geoData;
+		}
+	}
+	//API fetch was unsuccessful
+	else {
+		geoData.found = false;
+		geoData.MSG = apiRes.response;
+		geoData.geoDetails = {};
+		return geoData;
+	}
+}
+
+
+const processWeatherData = (apiRes, daysToGo, departISODate) => {
+	console.log("processWeatherData");
+	let weaData = {};
+	/*
+	weaData = {found: true,
+				MSG: "some message",
+				weather: {}
+			}
+	*/
+	if (apiRes.received) {
+		//If is trip is less than 17 days away, then match dates for forecast
+		if (daysToGo < 17) {
+			//If API returned weather data, process weather data
+			if (apiRes.response.data) {
+				//Check for each days forecast to find departure date's forecast
+				for (let i = 0; i < apiRes.response.data.length; i++) {
+					//Forecast for trip departure date is found
+					if (apiRes.response.data[i].valid_date === departISODate) {
+						weaData.found = true;
+						weaData.MSG = "weather record found for trip location and date."
+						weaData.weather = apiRes.response.data[i];
+						return weaData;
+					}
+				}
+				//If no matching record for trip departure date is found
+				if (!weaData.found) {
+					weaData.found = false;
+					weaData.MSG = "Weather for this date for trip location not found."
+					weaData.weather = {};
+					return weaData;
+				}
+			}
+			//API returned 0 records for weather data
+			else {
+				weaData.found = false;
+				if (apiRes.response.error) {
+					weaData.MSG = error;
+				}
+				else {
+					weaData.MSG = "No weather forcast found.";
+				}
+				weaData.weather = {};
+				return weaData;
+			}
+		}
+		//trip departure is more than 16 days in away
+		else {
+			weaData.found = false;
+			weaData.MSG = "Forcast for this date is not available. Please check upto 16 days before the trip";
+			weaData.weather = {};
+			return weaData;
+		}
+	}
+	//API fetch resulted in error
+	else {
+		weaData.found = false;
+		weaData.MSG = apiRes.response;
+		weaData.weather = {};
+		return weaData;
+	}
+}
+
 /*
 * ROUTES and REQUESTS
 */
@@ -103,6 +207,7 @@ const diffInDates = (date1, date2) => {
 * @returns: NA
 */
 const getHomePage = (req,res)=>{
+	console.log("getHomePage");
 	// res.sendFile(path.resolve('src/client/views/index.html'))
 	res.sendFile(path.resolve('dist/index.html'));
 }
@@ -117,51 +222,47 @@ const getHomePage = (req,res)=>{
 * @returns: NA
 */
 const postTrip = async (req,res)=> {
+	console.log("postTrip");
+	//Start will blank tripData for every new destination
+	if (tripData.destination != req.body.destination) {
+		tripData = {};
+	}
 	tripData.message = "POST received";
 	tripData.departureDate = new Date(req.body.departDate);
 	tripData.currentDate = new Date(req.body.currentDate);
 	tripData.destination  = req.body.destination;
+	tripData.departISODate = tripData.departureDate.toISOString().slice(0,10);
 
 	//Get the number of days to go before the trip
 	tripData.daysToGo = diffInDates(tripData.departureDate,
 									tripData.currentDate);
 
 	//Get the latitude and longitude f the trip destination
-	const geonamesDetails = await fetchGeonames(tripData.destination);
-	//TODO: Error handling for location not found
-	if (geonamesDetails.totalResultsCount == 0) {
-		tripData.geonamesMSG = "Location not found on geonames";
+	geoAPIrespose = await fetchGeonames(tripData.destination);
+	tripData.geonamesDetails = processGeoData(geoAPIrespose);
+	// console.log(tripData.geonamesDetails);
+	if (!tripData.geonamesDetails.found) {
 		res.send(tripData);
 		return
 	}
-	tripData.lat = geonamesDetails.geonames[0].lat;
-	tripData.lng = geonamesDetails.geonames[0].lng;
-	tripData.name = geonamesDetails.geonames[0].name;
-	tripData.countryName = geonamesDetails.geonames[0].countryName;
 
+	weatherAPIresponse = await fetchWeatherbit(
+									tripData.geonamesDetails.geoDetails.lat,
+									tripData.geonamesDetails.geoDetails.lng);
+	tripData.weatherbitDetails = processWeatherData(weatherAPIresponse,
+													tripData.daysToGo,
+													tripData.departISODate);
+	/*
 	//Get weather data if trip start within 16 days from current date
-	if (tripData.daysToGo < 17) {
-		const weatherDetails = await fetchWeatherbit(tripData.lat, tripData.lng);
-
-		for(let i=0; i<weatherDetails.data.length; i++) {
-			let departureISODate = tripData.departureDate.toISOString().slice(0,10);
-
-			if (weatherDetails.data[i].valid_date === departureISODate) {
-				console.log(weatherDetails.data[i]);
-				tripData.weather = weatherDetails.data[i];
-				break;
-			}
-		}
-		if (! tripData.weather) {
-			tripData.weatherMsg = "Weather forcast for this location and these days not found"
-		}
-	}
-	else {
-		tripData.weather = "No forcast for that date is available. Please upto 16 days before the trip"
-	}
-
+	tripData.weatherbitDetails = await fetchWeatherbit(
+									tripData.geonamesDetails.lat,
+									tripData.geonamesDetails.lng,
+									tripData.daysToGo,
+									tripData.departISODate);
+	*/
 	//Get images from pixabay
-	const imageDetails = await fetchPixabay(tripData.name);
+	const imageDetails = await fetchPixabay(
+								tripData.geonamesDetails.geoDetails.name);
 	if (imageDetails.total > 0) {
 		console.log("Images found");
 		tripData.images = imageDetails.hits[1];
@@ -211,14 +312,21 @@ app.post('/postTrip', postTrip);
 * @return {json} newData: location details received from API
 */
 const fetchGeonames = async (destination) => {
-	// console.log("Enter fetchGeonames")
-	// console.log(destination);
+	console.log("Enter fetchGeonames");
+	//TODO: Error handling for location not found
+	let apiRes = { };
+
+	//Fetch from API
 	const response = await fetch(`${GEONAMES_API}&username=${GEONAMES_USER}&name=${destination}`, {method: 'GET'});
 	try {
-		const geoData = await response.json();
-		return geoData;
+		apiRes.response = await response.json();
+		apiRes.received = true;
+		return apiRes;
 	}catch(error) {
 		console.log("error:", error);
+		apiRes.received = false;
+		apiRes.response = error;
+		return apiRes;
 	}
 }
 
@@ -231,15 +339,24 @@ const fetchGeonames = async (destination) => {
 * @return {json} weatherData: weather details received from API
 */
 const fetchWeatherbit = async (lat, lng) => {
-	// console.log("Enter fetchWeatherbit");
+	console.log("Enter fetchWeatherbit");
 	// console.log(lat, lng);
 	// console.log(`${WEATHERBIT_API}key=${WEATHERBIT_KEY}&units=I&lat=${lat}&lon=${lng}`)
+
+	let apiRes = { };
+
+	//Fetch from API
 	const response = await fetch(`${WEATHERBIT_API}key=${WEATHERBIT_KEY}&units=I&lat=${lat}&lon=${lng}`);
 	try {
-		const weatherData = await response.json();
-		return weatherData;
+		// process resonse from API
+		apiRes.response = await response.json();
+		apiRes.received = true;
+		return apiRes;
 	}catch(error) {
 		console.log("error:",error);
+		apiRes.received = false;
+		apiRes.response = error;
+		return apiRes;
 	}
 }
 
@@ -251,9 +368,8 @@ const fetchWeatherbit = async (lat, lng) => {
 * @return {json} imageData: image details received from API
 */
 const fetchPixabay = async (name) => {
-	// console.log("Enter fetchPixabay");
-	// console.log(`${PIXABAY_API}key=${PIXABAY_KEY}&q=${name}&image_type=photo&category=travel&safesearch=true`)
-
+	console.log("Enter fetchPixabay");
+	console.log(`${PIXABAY_API}key=${PIXABAY_KEY}&q=${name}&image_type=photo&category=travel&safesearch=true`)
 	const response = await fetch(`${PIXABAY_API}key=${PIXABAY_KEY}&q=${name}&image_type=photo&category=travel&safesearch=true`);
 	try {
 		const imageData = await response.json();
