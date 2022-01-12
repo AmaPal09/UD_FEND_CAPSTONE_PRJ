@@ -41,8 +41,9 @@ const postData = async(url='', data={}) => {
 async function postAndPrintTrip(tripData) {
 
 	console.log("Enter tripData()");
-
-	const results = await postData("/postTrip", tripData);
+	//TODO: Fix before submiting. Done for ease of compilation
+	// const results = await postData("/postTrip", tripData);
+	const results = await postData("http://localhost:3100/postTrip", tripData);
 	printTripDetails(results);
 }
 
