@@ -23,6 +23,11 @@ module.exports = {
 					name: '[name].[ext]',
 				},
 			},
+			//Fonts
+			{
+				test: /\.(woff|woff2|eot|ttf|otf)$/i,
+				type: 'asset/resource',
+			}
 		],
 	},
 	plugins: [

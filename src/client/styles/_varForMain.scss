@@ -66,3 +66,20 @@ $error: #dd3e37;
 $warning: #dd8c37;
 // $warning500: #ac8761;
 // $warning: #da8833
+
+
+@font-face{
+	font-family: 'Roboto';
+	src: url(./../media/fonts/Roboto-Regular.ttf) format('truetype');
+	font-weight: 400;
+ }
+
+@font-face {
+	font-family: 'Noto';
+	src: url(./../media/fonts/NotoSerif-Regular.ttf) format('truetype');
+	font-weight: 400;
+}
+
+
+$titleFont: 'Noto';
+$paraFont: 'Roboto';

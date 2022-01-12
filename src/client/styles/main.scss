@@ -11,6 +11,7 @@
 	font-size: 16px;
 	line-height: 1.5;
 	letter-spacing: 0.03rem;
+	font-family: $paraFont;
 }
 
 .main__hero {
@@ -29,6 +30,10 @@
 	background-color: $secondary500;
 	padding: 10px;
 	margin: 20px 0 20px 0;
+}
+
+h1 {
+	font-family: $titleFont;
 }
 
 footer {
