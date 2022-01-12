@@ -60,7 +60,7 @@
 		<!-- Results for trip planning-->
 		<section class="trip-plan">
 			<div class="trip-plan__images">
-				<img src="" id="destinationImage">
+				<img src="" id="destinationImage" class="img">
 			</div>
 			<div class="trip-plan__countdown">
 				<p>Trip to <span id="tripLoc"></span> is <span id="tripDaysToGo"></span> days away</p>
@@ -70,10 +70,11 @@
 				<!-- TODO: Add trip min and max temps -->
 				<p id="tempRange"> High: <span id="tempHigh"></span>, Low: <span id="tempLow"></span></p>
 				<!-- TODO: Add trip sun/cloud prospects -->
-				<p id="weatherDescription">
-					<span id="weatherText"></span>
+				<div class="weather__flex">
+					<p id="weatherText"></p>
+					<br>
 					<img id="weatherIcon" src="" alt="Weather icon">
-				</p>
+				</div>
 			</div>
 
 		</section>

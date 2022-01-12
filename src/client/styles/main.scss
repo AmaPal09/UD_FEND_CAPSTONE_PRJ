@@ -41,7 +41,7 @@ footer {
 	padding: 5px;
 }
 
-#weatherDescription {
+.weather__flex {
 	display: flex;
     flex-direction: row;
     align-items: center;
@@ -49,4 +49,8 @@ footer {
 
 #weatherIcon {
 	height: 3rem;
+}
+
+.img {
+	width: 100%;
 }
