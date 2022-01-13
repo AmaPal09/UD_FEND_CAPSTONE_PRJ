@@ -13,7 +13,12 @@ import templateImg1 from './media/images/templateImg1.jpg';
 import {lAnimation} from './js/mojsAni.js';
 import {eAnimation} from './js/mojsAni.js';
 import {tAnimation} from './js/mojsAni.js';
-
+import {apostAnimation} from './js/mojsAni.js';
+import {sAnimation} from './js/mojsAni.js';
+import {gAnimation} from './js/mojsAni.js';
+import {oAnimation} from './js/mojsAni.js';
+import {exclaimAnimation} from './js/mojsAni.js';
+import {spaceAnimation} from './js/mojsAni.js';
 
 // console.log(validateInputs);
 document.addEventListener('DOMContentLoaded', function () {
@@ -31,6 +36,12 @@ animationBtn.addEventListener('click', function(){
 	lAnimation.play();
 	eAnimation.play();
 	tAnimation.play();
+	apostAnimation.play();
+	sAnimation.play();
+	spaceAnimation.play();
+	gAnimation.play();
+	oAnimation.play();
+	exclaimAnimation.play();
 
 });
 

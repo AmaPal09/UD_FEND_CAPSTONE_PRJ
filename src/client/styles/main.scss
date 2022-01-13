@@ -87,6 +87,17 @@ footer {
 	flex-direction: row;
 }
 
+.animeText {
+	font-family: $titleFontBold;
+	font-size: 1.5rem;
+	letter-spacing: 0.04;
+}
+
+#animateBr {
+	height: 1.5rem;
+	width: 1rem;
+}
+
 .trip-plan {
 	background-color: $secondary500;
 	padding: 10px;

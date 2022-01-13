@@ -86,7 +86,13 @@ $warning: #dd8c37;
 	font-weight: 400;
 }
 
+@font-face {
+	font-family: 'Noto-Bold';
+	src: url(./../media/fonts/NotoSerif-Bold.ttf) format('truetype');
+	font-weight: 400;
+}
 
 $titleFont: 'Noto';
+$titleFontBold: 'Noto-Bold';
 $paraFont: 'Roboto';
 $paraSmallItalicsFont: 'Roboto-Light-Italics';
