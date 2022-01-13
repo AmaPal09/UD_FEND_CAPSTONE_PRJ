@@ -10,6 +10,12 @@
 	margin-block-start: 0;
     margin-block-end: 0;
 	font-size: 16px;
+	@include respond-screen-size("medium") {
+		font-size: 18px
+	}
+	@include respond-screen-size("large") {
+		font-size: 20px
+	}
 	line-height: 1.5;
 	letter-spacing: 0.03rem;
 	font-family: $paraFont;
@@ -34,6 +40,7 @@
 
 h1 {
 	font-family: $titleFont;
+	font-size: 2rem;
 }
 
 //Page footer styling
@@ -48,6 +55,11 @@ footer {
 	background-color: $neutral500;
 	padding: 10px;
 	margin: 20px 0 0 0;
+}
+
+.copyrights__statement {
+	font-family: $paraSmallItalicsFont;
+	font-size: 0.7rem;
 }
 
 //Page main content styling

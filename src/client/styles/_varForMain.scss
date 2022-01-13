@@ -72,7 +72,13 @@ $warning: #dd8c37;
 	font-family: 'Roboto';
 	src: url(./../media/fonts/Roboto-Regular.ttf) format('truetype');
 	font-weight: 400;
- }
+}
+
+@font-face{
+	font-family: 'Roboto-Light-Italics';
+	src: url(./../media/fonts/Roboto-LightItalic.ttf) format('truetype');
+	font-weight: 300;
+}
 
 @font-face {
 	font-family: 'Noto';
@@ -83,3 +89,4 @@ $warning: #dd8c37;
 
 $titleFont: 'Noto';
 $paraFont: 'Roboto';
+$paraSmallItalicsFont: 'Roboto-Light-Italics';
