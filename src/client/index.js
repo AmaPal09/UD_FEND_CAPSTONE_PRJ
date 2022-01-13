@@ -10,6 +10,8 @@ import { submitTripInfoForm } from './js/app.js';
 // import defaultImg1 from './media/images/defaultImg1.jpg';
 import templateImg1 from './media/images/templateImg1.jpg';
 
+import {lAnimation} from './js/mojsAni.js';
+
 
 // console.log(validateInputs);
 document.addEventListener('DOMContentLoaded', function () {
@@ -21,6 +23,9 @@ destinationImage.src = templateImg1;
 
 const generatePlan = document.getElementById('generatePlan');
 generatePlan.addEventListener('click', submitTripInfoForm);
+
+const animationBtn = document.getElementById("animationBtn");
+animationBtn.addEventListener('click', function(){lAnimation.play()});
 
 alert("Hi there!");
 

@@ -29,6 +29,7 @@
   "homepage": "https://github.com/AmaPal09/UD_FEND_CAPSTONE_PRJ#readme",
   "dependencies": {
     "@babel/runtime": "^7.16.5",
+    "@mojs/core": "^1.2.1",
     "body-parser": "^1.19.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
