@@ -28,21 +28,20 @@
 <body>
 	<!-- This HTML follows BEM [block]__[element]--[modifier] class naming convention-->
 	<!-- use some-thesis instead of somethesis for class names -->
-	<header class="page__header">
+	<!-- <header class="page__header">
 		<nav class="navbar__menu">
 			<ul class="navbar__list">
-				<!-- TODO: Add nav bar items -->
+				< TODO: Add nav bar items>
 			</ul>
 		</nav>
+	</header> -->
+
+	<!-- Move to header section if no nav bar is needed -->
+	<header class="page__header main__hero">
+		<h1>Travel Planner</h1>
 	</header>
 
-
-	<main>
-		<!-- Move to header section if no nav bar is needed -->
-		<header class="main__hero">
-			<h1>Travel Planner</h1>
-		</header>
-
+	<main class="page__body">
 		<!-- Form to get trip information -->
 		<section class="trip-info">
 			<form class="trip-info__form">
@@ -72,7 +71,7 @@
 				<!-- TODO: Add trip sun/cloud prospects -->
 				<div class="weather__flex">
 					<p id="weatherText"></p>
-					<br>
+					<br> <br>
 					<img id="weatherIcon" src="" alt="Weather icon">
 				</div>
 			</div>
@@ -81,7 +80,7 @@
 	</main>
 
 
-	<footer>
+	<footer class="page__footer">
 		<section class="copyrights">
 			<p class="copyrights__statement">
 				&copy 2021 Designed & coded by Amarja Palekar

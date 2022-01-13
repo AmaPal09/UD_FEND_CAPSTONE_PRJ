@@ -1,5 +1,6 @@
 // Imported partials, mixis
 @import 'varFormain';
+@import 'mediaMixin';
 
 
 // Root styles
@@ -14,10 +15,48 @@
 	font-family: $paraFont;
 }
 
+//Page header styling
+.page__header {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .main__hero {
 	background-color: $primary500;
 	padding: 10px;
-	margin: 0px 0 20px 0;
+	// margin: 0px 0 20px 0;
+}
+
+h1 {
+	font-family: $titleFont;
+}
+
+//Page footer styling
+.page__footer {
+	margin: 0;
+	display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+footer {
+	background-color: $neutral500;
+	padding: 10px;
+	margin: 20px 0 0 0;
+}
+
+//Page main content styling
+.page__body {
+	padding-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
 }
 
 .trip-info {
@@ -29,17 +68,54 @@
 .trip-plan {
 	background-color: $secondary500;
 	padding: 10px;
-	margin: 20px 0 20px 0;
+	margin: 0 0 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    @include respond-screen-size("medium") {
+    	display: grid;
+    	grid-template-columns: 1fr 1fr;
+    	grid-template-rows: 1fr 1fr;
+    	grid-template-areas: 'left right-top'
+    						 'left right-bottom';
+    	grid-gap: 20px;
+    }
+    @include respond-screen-size("large") {
+    	display: grid;
+    	grid-template-columns: 1fr 1fr;
+    	grid-template-rows: 1fr 1fr;
+    	grid-template-areas: 'left right-top'
+    						 'left right-bottom';
+    	grid-gap: 20px;
+    }
 }
 
-h1 {
-	font-family: $titleFont;
+.trip-plan__images {
+	@include respond-screen-size("medium") {
+		grid-area: left;
+	}
+	@include respond-screen-size("large") {
+		grid-area: left;
+	}
 }
 
-footer {
-	background-color: $neutral500;
-	padding: 10px;
-	margin: 20px 0 20px 0;
+.trip-plan__countdown {
+	@include respond-screen-size("medium") {
+		grid-area: right-top;
+	}
+	@include respond-screen-size("large") {
+		grid-area: right-top;
+	}
+}
+
+.trip-plan__weather {
+	@include respond-screen-size("medium") {
+		grid-area: right-bottom;
+	}
+	@include respond-screen-size("large") {
+		grid-area: right-bottom;
+	}
 }
 
 .btn {
