@@ -11,6 +11,8 @@ import { submitTripInfoForm } from './js/app.js';
 import templateImg1 from './media/images/templateImg1.jpg';
 
 import {lAnimation} from './js/mojsAni.js';
+import {eAnimation} from './js/mojsAni.js';
+import {tAnimation} from './js/mojsAni.js';
 
 
 // console.log(validateInputs);
@@ -25,7 +27,12 @@ const generatePlan = document.getElementById('generatePlan');
 generatePlan.addEventListener('click', submitTripInfoForm);
 
 const animationBtn = document.getElementById("animationBtn");
-animationBtn.addEventListener('click', function(){lAnimation.play()});
+animationBtn.addEventListener('click', function(){
+	lAnimation.play();
+	eAnimation.play();
+	tAnimation.play();
+
+});
 
 alert("Hi there!");
 
