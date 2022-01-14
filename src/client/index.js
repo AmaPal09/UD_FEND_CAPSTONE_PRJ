@@ -31,8 +31,8 @@ destinationImage.src = templateImg1;
 const generatePlan = document.getElementById('generatePlan');
 generatePlan.addEventListener('click', submitTripInfoForm);
 
-const animationBtn = document.getElementById("animationBtn");
-animationBtn.addEventListener('click', function(){
+// const animationBtn = document.getElementById("animationBtn");
+generatePlan.addEventListener('click', function(){
 	lAnimation.play();
 	eAnimation.play();
 	tAnimation.play();
@@ -42,7 +42,6 @@ animationBtn.addEventListener('click', function(){
 	gAnimation.play();
 	oAnimation.play();
 	exclaimAnimation.play();
-
 });
 
 alert("Hi there!");
