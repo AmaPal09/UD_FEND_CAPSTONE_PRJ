@@ -1,5 +1,15 @@
+//mojsAni.js
 //File to animate using mojs
+
+/*
+* I M P O R T   R E Q U I R E D   M O D U L E S
+*/
 import mojs from '@mojs/core'
+
+
+/*
+* V A R I A L B E S
+*/
 let xstart = 40;
 const lNode = document.getElementById("animateL");
 const eNode = document.getElementById("animateE");
@@ -11,6 +21,9 @@ const oNode = document.getElementById("animateO");
 const exclaimNode = document.getElementById("animateexclaim");
 const spaceNode = document.getElementById("animateBr");
 
+/*
+* M O J S   O B J E C T S
+*/
 //Animate L
 const lAnimation = new mojs.Html({
 	el: lNode,
@@ -252,6 +265,10 @@ const spaceAnimation = new mojs.Html({
 	},
 }).play();
 
+
+/*
+* E X P O R T   M O D U L E S
+*/
 export {lAnimation};
 export {eAnimation};
 export {tAnimation};
@@ -261,4 +278,3 @@ export {gAnimation};
 export {oAnimation};
 export {exclaimAnimation};
 export {spaceAnimation};
-

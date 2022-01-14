@@ -87,6 +87,7 @@ footer {
 	flex-direction: row;
 }
 
+//Animation elements and classes
 .animeText {
 	font-family: $titleFontBold;
 	font-size: 1.5rem;
@@ -122,6 +123,7 @@ footer {
 	color: $accent1000;
 }
 
+//Trip plan results
 .trip-plan {
 	background-color: $secondary500;
 	padding: 10px;
@@ -175,14 +177,16 @@ footer {
 	}
 }
 
-.btn {
-	padding: 5px;
-}
-
 .weather__flex {
 	display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+
+//Helper classes and elements
+.btn {
+	padding: 5px;
 }
 
 #weatherIcon {

@@ -1,4 +1,17 @@
+//routesNreqs.js
+//All routes and requests to servers
+
+
+/*
+* I M P O R T   R E Q U I R E D   M O D U L E S
+*/
 import { printTripDetails } from './printToClient.js';
+
+
+/*
+* F U N C T I O N S
+*/
+
 /*
 * postData ASYNC FUNCTION
 * @description: Makes a post request to the server to
@@ -48,5 +61,8 @@ async function postAndPrintTrip(tripData) {
 }
 
 
+/*
+* E X P O R T   M O D U L E S
+*/
 export { postAndPrintTrip,
 		 postData };

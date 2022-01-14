@@ -1,22 +1,21 @@
+//app.js
+//Main js file calling all the functions
+
 /*
-* IMPORTED FILES and FUNCTIONS
+* I M P O R T E D   F I L E S   &   F U N C T I O N S
 */
 import { validateInputs } from './inputValidations.js';
 import { validateFutureDate } from './inputValidations.js';
 import { postAndPrintTrip } from './routesNreqs.js';
 
+
 /*
 * V A R I A B L E S
 */
 
-// Variables for user input
-
-
 
 /*
-*
 * F U N C T I O N S
-*
 */
 
 /*
@@ -75,9 +74,7 @@ function submitTripInfoForm(e){
 
 
 /*
-*
 * E V E N T   L I S T E N E R S
-*
 */
 function addEvents(){
 	console.log("Enter addEvents()");
@@ -86,5 +83,9 @@ function addEvents(){
 }
 // generatePlan.addEventListener('click', submitTripInfoForm);
 
+
+/*
+* E X P O R T   M O D U L E S
+*/
 export{ addEvents,
 		submitTripInfoForm};

@@ -1,3 +1,11 @@
+//inputValidations.js
+//Validate inputs provided by user
+
+
+/*
+* F U N C T I O N S
+*/
+
 /*
 * validateInputs FUNCTION
 * @description: Validate that user has provided some input for the trip
@@ -56,5 +64,8 @@ function validateFutureDate(fDate, cDate) {
 }
 
 
+/*
+* E X P O R T   M O D U L E S
+*/
 export { validateInputs,
 		 validateFutureDate };

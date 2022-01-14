@@ -1,3 +1,18 @@
+//printToClient.js
+//load data received from server to the client
+
+
+/*
+* F U N C T I O N S
+*/
+
+/*
+* printTripPlanImages FUNCTION
+* @description: Prints images from server if avaliable to frontend else
+*				display loaded templates
+* @param: {object} pixaImgDetails: Details of images to be posted
+* @returns: NA
+*/
 function printTripPlanImages(pixaImgDetails) {
 	if(pixaImgDetails.found) {
 		//TODO: Once loading of file from images is successful, uncomment below lines, remove current attribute set-up
@@ -11,6 +26,12 @@ function printTripPlanImages(pixaImgDetails) {
 }
 
 
+/*
+* printTripPlanCountdown FUNCTION
+* @description: Prints count down details and destination from server
+* @param: {object} tripDetails: Details of trip to be posted
+* @returns: NA
+*/
 function printTripPlanCountdown(tripDetails) {
 	document.getElementById("tripLoc").innerText =
 						`${tripDetails.geonamesDetails.geoDetails.name}, ` +
@@ -19,6 +40,13 @@ function printTripPlanCountdown(tripDetails) {
 }
 
 
+/*
+* printTripPlanWeather FUNCTION
+* @description: Prints weather details and destination from server if avaliable
+* 				to front end.
+* @param: {object} tripDetails: Details of trip to be posted
+* @returns: NA
+*/
 function printTripPlanWeather(weatherDetails) {
 
 	if (weatherDetails.found) {
@@ -35,8 +63,6 @@ function printTripPlanWeather(weatherDetails) {
 }
 
 
-
-
 /*
 * printTripDetails FUNCTION
 * @description: Prints details of the trip received from the server to
@@ -48,16 +74,13 @@ function printTripDetails(tripDetails) {
 
 	console.log("Enter printTripDetails()");
 	console.log(tripDetails);
-	// document.getElementById("tripLoc").innerText =
-	// 					`${tripDetails.geonamesDetails.geoDetails.name}, ` +
-	// 					`${tripDetails.geonamesDetails.geoDetails.countryName}`;
-	// document.getElementById("tripDaysToGo").innerText = tripDetails.daysToGo;
-
 	printTripPlanImages(tripDetails.pixabayDetails);
 	printTripPlanCountdown(tripDetails);
 	printTripPlanWeather(tripDetails.weatherbitDetails);
 
 }
 
-
+/*
+* E X P O R T   M O D U L E S
+*/
 export{ printTripDetails };
