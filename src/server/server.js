@@ -77,13 +77,11 @@ const REST_COUNTRIES_API = 'https://restcountries.com/v3.1/name/';
 * @returns: NA
 */
 const diffInDates = (date1, date2) => {
-	console.log("diffInDates");
 	let numDays = 0;
 
 	numDays = Math.round((date1.getTime() - date2.getTime())
 						/(1000*3600*24));
 	if (numDays < 0) {
-		// console.log("Please check order of date parameters");
 		return 0;
 	}
 	else {
@@ -104,7 +102,6 @@ const diffInDates = (date1, date2) => {
 *		}
 */
 const processGeoData = (apiRes) => {
-	console.log("processGeoData");
 	let geoData = {};
 
 	//If api fetch was successful
@@ -152,7 +149,6 @@ const processGeoData = (apiRes) => {
 *		}
 */
 const processWeatherData = (apiRes, daysToGo, departISODate) => {
-	console.log("processWeatherData");
 	let weaData = {};
 	if (apiRes.received) {
 		//If is trip is less than 17 days away, then match dates for forecast
@@ -220,7 +216,6 @@ const processWeatherData = (apiRes, daysToGo, departISODate) => {
 *		}
 */
 const processImageData = async (apiRes,countryName) => {
-	console.log("processImageData");
 	let imgData = {};
 
 	//API fetch was successful
@@ -228,7 +223,6 @@ const processImageData = async (apiRes,countryName) => {
 		//No images available
 		if (apiRes.response.total < 1) {
 			//Look for country images instead
-			console.log("Images not found use country instead");
 			const apiRes2 = await fetchPixabay(countryName);
 			//API fetch was successful
 			if (apiRes2.received) {
@@ -286,8 +280,6 @@ const processImageData = async (apiRes,countryName) => {
 *					  }
 */
 const processRestCountriesData = (apiRes) => {
-	console.log("processrestCountriesData");
-	console.log(apiRes);
 	let restCountriesData = {};
 
 	//If api fetch was successful
@@ -329,7 +321,6 @@ const processRestCountriesData = (apiRes) => {
 			restCountriesData.restCountriesDetails.languages = Object.values(cntDtl.languages);
 
 			restCountriesData.restCountriesDetails.flags = cntDtl.flag;
-			console.log(restCountriesData);
 			return restCountriesData;
 		}
 	}
@@ -356,7 +347,6 @@ const processRestCountriesData = (apiRes) => {
 * @returns: NA
 */
 const getHomePage = (req,res)=>{
-	console.log("getHomePage");
 	// res.sendFile(path.resolve('src/client/views/index.html'))
 	res.sendFile(path.resolve('dist/index.html'));
 }
@@ -371,7 +361,6 @@ const getHomePage = (req,res)=>{
 * @returns: NA
 */
 const postTrip = async (req,res)=> {
-	console.log("postTrip");
 	//Start will blank tripData for every new destination
 	if (tripData.destination != req.body.destination) {
 		tripData = {};
@@ -389,7 +378,6 @@ const postTrip = async (req,res)=> {
 	//Get the latitude and longitude f the trip destination
 	const geoAPIrespose = await fetchGeonames(tripData.destination);
 	tripData.geonamesDetails = processGeoData(geoAPIrespose);
-	// console.log(tripData.geonamesDetails);
 	if (!tripData.geonamesDetails.found) {
 		res.send(tripData);
 		return
@@ -416,26 +404,6 @@ const postTrip = async (req,res)=> {
 							tripData.geonamesDetails.geoDetails.countryName);
 	tripData.restCountriesDetails = processRestCountriesData(
 													restCountriesAPIresponse);
-	/*
-	//Get images from pixabay
-	const imageDetails = await fetchPixabay(
-								tripData.geonamesDetails.geoDetails.name);
-	if (imageDetails.total > 0) {
-		console.log("Images found");
-		tripData.images = imageDetails.hits[1];
-	}
-	else {
-		console.log("Images not found use country instead");
-		const imageDetails = await fetchPixabay(tripData.countryName);
-		if (imageDetails.total < 1) {
-			tripData.imageMSG = 'No image found';
-			//TODO: replace above with 1 generic travel image on FE
-		}
-		else {
-			tripData.images = imageDetails.hits[1];
-		}
-	}
-	*/
 	//Send trip data as a response to this post request
 	res.send(tripData);
 }
@@ -470,7 +438,6 @@ app.post('/postTrip', postTrip);
 * @return {object} apiRes: location details received from API
 */
 const fetchGeonames = async (destination) => {
-	console.log("Enter fetchGeonames");
 	let apiRes = { };
 
 	//Fetch from API
@@ -496,7 +463,6 @@ const fetchGeonames = async (destination) => {
 * @return {object} apiRes: weather details received from API
 */
 const fetchWeatherbit = async (lat, lng) => {
-	console.log("Enter fetchWeatherbit");
 
 	let apiRes = { };
 
@@ -522,10 +488,8 @@ const fetchWeatherbit = async (lat, lng) => {
 * @return {json} imageData: image details received from API
 */
 const fetchPixabay = async (name) => {
-	console.log("Enter fetchPixabay");
 	let apiRes = {};
 
-	console.log(`${PIXABAY_API}key=${PIXABAY_KEY}&q=${name}&image_type=photo&category=travel&safesearch=true`)
 	const response = await fetch(`${PIXABAY_API}key=${PIXABAY_KEY}&q=${name}&image_type=photo&category=travel&safesearch=true`);
 	try {
 		apiRes.response = await response.json();
@@ -546,10 +510,8 @@ const fetchPixabay = async (name) => {
 * @return {json} coutriesData: Countries details received from API
 */
 const fetchRestCountries = async (name) => {
-	console.log("Enter fetchRestCountries");
 	let apiRes = {};
 
-	console.log(`${REST_COUNTRIES_API}${name}?fulltext=true`);
 	const response = await fetch(`${REST_COUNTRIES_API}${name}?fulltext=true`);
 	try {
 		apiRes.response = await response.json();
