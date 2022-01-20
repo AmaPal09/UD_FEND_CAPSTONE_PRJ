@@ -10,14 +10,14 @@
 * printTripPlanImages FUNCTION
 * @description: Prints images from server if avaliable to frontend else
 *				display loaded templates
-* @param: {object} pixaImgDetails: Details of images to be posted
+* @param: {object} pixImgDtls: Details of images to be posted
 * @returns: NA
 */
-function printTripPlanImages(pixaImgDetails) {
-	if(pixaImgDetails.found) {
+function printTripPlanImages(pixImgDtls) {
+	if(pixImgDtls.found) {
 		//TODO: Once loading of file from images is successful, uncomment below lines, remove current attribute set-up
 		document.getElementById("destinationImage").setAttribute("src",
-									pixaImgDetails.imageDetails.webformatURL);
+									pixImgDtls.imageDetails.webformatURL);
 		/*document.getElementById("destinationImage").setAttribute("src", `./images/defaultImg1.jpg`);*/
 	}
 	else {
@@ -34,8 +34,8 @@ function printTripPlanImages(pixaImgDetails) {
 */
 function printTripPlanCountdown(tripDetails) {
 	document.getElementById("tripLoc").innerText =
-						`${tripDetails.geonamesDetails.geoDetails.name}, ` +
-						`${tripDetails.geonamesDetails.geoDetails.countryName}`;
+						`${tripDetails.geoNmeDtls.geoDtl.name}, ` +
+						`${tripDetails.geoNmeDtls.geoDtl.countryName}`;
 	document.getElementById("tripDaysToGo").innerText = tripDetails.daysToGo;
 }
 
@@ -47,16 +47,17 @@ function printTripPlanCountdown(tripDetails) {
 * @param: {object} tripDetails: Details of trip to be posted
 * @returns: NA
 */
-function printTripPlanWeather(weatherDetails) {
+function printTripPlanWeather(weaDtls) {
 
-	if (weatherDetails.found) {
+	if (weaDtls.found) {
 		document.getElementById("tempHigh").innerText =
-										`${weatherDetails.weather.high_temp}`;
+											`${weaDtls.weather.high_temp}`;
 		document.getElementById("tempLow").innerText =
-										`${weatherDetails.weather.low_temp}`;
+											`${weaDtls.weather.low_temp}`;
 		document.getElementById("weatherText").innerText =
-							`${weatherDetails.weather.weather.description} `;
-		const weatherIconSrc= `https://www.weatherbit.io/static/img/icons/${							weatherDetails.weather.weather.icon}.png`;
+									`${weaDtls.weather.weather.description} `;
+		const weatherIconSrc= `https://www.weatherbit.io/static/img/icons/` +
+										`${weaDtls.weather.weather.icon}.png`;
 		console.log(weatherIconSrc);
 		document.getElementById("weatherIcon").setAttribute("src", 																weatherIconSrc);
 	}
@@ -74,9 +75,9 @@ function printTripDetails(tripDetails) {
 
 	console.log("Enter printTripDetails()");
 	console.log(tripDetails);
-	printTripPlanImages(tripDetails.pixabayDetails);
+	printTripPlanImages(tripDetails.pixBayDtls);
 	printTripPlanCountdown(tripDetails);
-	printTripPlanWeather(tripDetails.weatherbitDetails);
+	printTripPlanWeather(tripDetails.weaBitDtls);
 
 }
 
