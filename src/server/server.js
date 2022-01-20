@@ -365,8 +365,7 @@ const postTrip = async (req,res)=> {
 	tripDta.departISODte = tripDta.departDte.toISOString().slice(0,10);
 
 	//Get the number of days to go before the trip
-	tripDta.daysToGo = diffInDates(tripDta.departDte,
-									tripDta.currDte);
+	tripDta.daysToGo = diffInDates(tripDta.departDte, tripDta.currDte);
 
 	//Get the latitude and longitude f the trip destination
 	const geoAPIrespose = await fetchGeonames(tripDta.destination);
