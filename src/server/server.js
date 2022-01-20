@@ -57,7 +57,7 @@ const WEATHERBIT_API = 'https://api.weatherbit.io/v2.0/forecast/daily?';
 const WEATHERBIT_KEY = process.env.WEATHERBIT_KEY;
 const PIXABAY_API='https://pixabay.com/api/?';
 const PIXABAY_KEY=process.env.PIXABAY_KEY;
-
+const REST_COUNTRIES_API = 'https://restcountries.com/v3.1/name/';
 
 /*
 *
@@ -273,6 +273,77 @@ const processImageData = async (apiRes,countryName) => {
 }
 
 
+
+/*
+* processRestCountriesData FUNCTION
+* @description: Process API response from rest Countries API
+* @param {object} apiRes: API response received from REST countries API
+* @returns {object} restCountriesData: Processed response
+* restCountriesData structure
+* restCountriesData = {found: true,
+*						MSG: "some message",
+*						weather: {}
+*					  }
+*/
+const processRestCountriesData = (apiRes) => {
+	console.log("processrestCountriesData");
+	console.log(apiRes);
+	let restCountriesData = {};
+
+	//If api fetch was successful
+	if (apiRes.received) {
+		//No location found
+		if (apiRes.response.status == 404) {
+			restCountriesData.found = false;
+			restCountriesData.MSG = "Country details not found on REST Countries";
+			restCountriesData.restCountriesDetails = {};
+			return restCountriesData;
+		}
+
+		else {
+			restCountriesData.found = true;
+			restCountriesData.MSG = "Details found for country";
+
+
+			let cntDtl = apiRes.response[0];
+			restCountriesData.restCountriesDetails = {};
+
+			restCountriesData.restCountriesDetails.officalNme =
+														cntDtl.name.official;
+			restCountriesData.restCountriesDetails.continent =
+														cntDtl.continents;
+			restCountriesData.restCountriesDetails.population =
+														cntDtl.population;
+			restCountriesData.restCountriesDetails.region =
+														cntDtl.subregion;
+			restCountriesData.restCountriesDetails.currency = []
+
+			let tempCurrArr = Object.values(cntDtl.currencies);
+			for (let i = 0; i < tempCurrArr.length; i++) {
+				restCountriesData.restCountriesDetails.currency.push(tempCurrArr[0].name);
+			}
+
+			restCountriesData.restCountriesDetails.capital =
+														cntDtl.capital;
+
+			restCountriesData.restCountriesDetails.languages = Object.values(cntDtl.languages);
+
+			restCountriesData.restCountriesDetails.flags = cntDtl.flag;
+			console.log(restCountriesData);
+			return restCountriesData;
+		}
+	}
+	//API fetch was unsuccessful
+	else {
+		restCountriesData.found = false;
+		restCountriesData.MSG = apiRes.response;
+		restCountriesData.restCountriesDetails = {};
+		return restCountriesData;
+	}
+
+}
+
+
 /*
 * ROUTES and REQUESTS
 */
@@ -338,6 +409,13 @@ const postTrip = async (req,res)=> {
 	tripData.pixabayDetails = await processImageData(
 							pixabayAPIresponse,
 							tripData.geonamesDetails.geoDetails.countryName);
+
+
+	//Get country details from REST countries API
+	const restCountriesAPIresponse = await fetchRestCountries(
+							tripData.geonamesDetails.geoDetails.countryName);
+	tripData.restCountriesDetails = processRestCountriesData(
+													restCountriesAPIresponse);
 	/*
 	//Get images from pixabay
 	const imageDetails = await fetchPixabay(
@@ -449,6 +527,30 @@ const fetchPixabay = async (name) => {
 
 	console.log(`${PIXABAY_API}key=${PIXABAY_KEY}&q=${name}&image_type=photo&category=travel&safesearch=true`)
 	const response = await fetch(`${PIXABAY_API}key=${PIXABAY_KEY}&q=${name}&image_type=photo&category=travel&safesearch=true`);
+	try {
+		apiRes.response = await response.json();
+		apiRes.received = true;
+		return apiRes;
+	}catch(error) {
+		console.log("error:", error);
+		apiRes.received = false;
+		apiRes.response = error;
+	}
+}
+
+
+/*
+* fetchRestCountries ASYNC FUNCTION
+* @description: Makes a fetch request to REST Counytries API
+* @param {string} name: Full country name
+* @return {json} coutriesData: Countries details received from API
+*/
+const fetchRestCountries = async (name) => {
+	console.log("Enter fetchRestCountries");
+	let apiRes = {};
+
+	console.log(`${REST_COUNTRIES_API}${name}?fulltext=true`);
+	const response = await fetch(`${REST_COUNTRIES_API}${name}?fulltext=true`);
 	try {
 		apiRes.response = await response.json();
 		apiRes.received = true;
