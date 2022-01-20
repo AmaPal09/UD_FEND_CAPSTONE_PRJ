@@ -49,7 +49,7 @@ dotenv.config(); //configure env variables
 * V A R I A L B E S
 *
 */
-let tripData = {};
+let tripDta = {};
 const GEONAMES_API =
 			'http://api.geonames.org/searchJSON?maxRows=1&style=MEDIUM';
 const GEONAMES_USER = process.env.GEONAMES_USER;
@@ -98,7 +98,7 @@ const diffInDates = (date1, date2) => {
 * geoData structure
 * geoData = { found: false;
 *			MSG: "Some messge"
-*			geoDetails: {}
+*			geoDtl: {}
 *		}
 */
 const processGeoData = (apiRes) => {
@@ -110,18 +110,18 @@ const processGeoData = (apiRes) => {
 		if (apiRes.response.totalResultsCount == 0) {
 			geoData.found = false;
 			geoData.MSG = "Location not found on geonames";
-			geoData.geoDetails = {};
+			geoData.geoDtl = {};
 			return geoData;
 		}
 		//location found
 		else {
 			geoData.found = true;
 			geoData.MSG = "Record found for location";
-			geoData.geoDetails = {};
-			geoData.geoDetails.lat = apiRes.response.geonames[0].lat;
-			geoData.geoDetails.lng = apiRes.response.geonames[0].lng;
-			geoData.geoDetails.name = apiRes.response.geonames[0].name;
-			geoData.geoDetails.countryName = apiRes.response.geonames[0].countryName;
+			geoData.geoDtl = {};
+			geoData.geoDtl.lat = apiRes.response.geonames[0].lat;
+			geoData.geoDtl.lng = apiRes.response.geonames[0].lng;
+			geoData.geoDtl.name = apiRes.response.geonames[0].name;
+			geoData.geoDtl.countryName = apiRes.response.geonames[0].countryName;
 			return geoData;
 		}
 	}
@@ -129,7 +129,7 @@ const processGeoData = (apiRes) => {
 	else {
 		geoData.found = false;
 		geoData.MSG = apiRes.response;
-		geoData.geoDetails = {};
+		geoData.geoDtl = {};
 		return geoData;
 	}
 }
@@ -280,56 +280,49 @@ const processImageData = async (apiRes,countryName) => {
 *					  }
 */
 const processRestCountriesData = (apiRes) => {
-	let restCountriesData = {};
+	let couData = {};
 
 	//If api fetch was successful
 	if (apiRes.received) {
 		//No location found
 		if (apiRes.response.status == 404) {
-			restCountriesData.found = false;
-			restCountriesData.MSG = "Country details not found on REST Countries";
-			restCountriesData.restCountriesDetails = {};
-			return restCountriesData;
+			couData.found = false;
+			couData.MSG = "Country details not found on REST Countries";
+			couData.couDtl = {};
+			return couData;
 		}
 
 		else {
-			restCountriesData.found = true;
-			restCountriesData.MSG = "Details found for country";
+			couData.found = true;
+			couData.MSG = "Details found for country";
 
 
 			let cntDtl = apiRes.response[0];
-			restCountriesData.restCountriesDetails = {};
+			couData.couDtl = {};
 
-			restCountriesData.restCountriesDetails.officalNme =
-														cntDtl.name.official;
-			restCountriesData.restCountriesDetails.continent =
-														cntDtl.continents;
-			restCountriesData.restCountriesDetails.population =
-														cntDtl.population;
-			restCountriesData.restCountriesDetails.region =
-														cntDtl.subregion;
-			restCountriesData.restCountriesDetails.currency = []
+			couData.couDtl.officalNme = cntDtl.name.official;
+			couData.couDtl.continent = cntDtl.continents;
+			couData.couDtl.population = cntDtl.population;
+			couData.couDtl.region = cntDtl.subregion;
+			couData.couDtl.currency = []
 
 			let tempCurrArr = Object.values(cntDtl.currencies);
 			for (let i = 0; i < tempCurrArr.length; i++) {
-				restCountriesData.restCountriesDetails.currency.push(tempCurrArr[0].name);
+				couData.couDtl.currency.push(tempCurrArr[0].name);
 			}
 
-			restCountriesData.restCountriesDetails.capital =
-														cntDtl.capital;
-
-			restCountriesData.restCountriesDetails.languages = Object.values(cntDtl.languages);
-
-			restCountriesData.restCountriesDetails.flags = cntDtl.flag;
-			return restCountriesData;
+			couData.couDtl.capital = cntDtl.capital;
+			couData.couDtl.languages = Object.values(cntDtl.languages);
+			couData.couDtl.flags = cntDtl.flag;
+			return couData;
 		}
 	}
 	//API fetch was unsuccessful
 	else {
-		restCountriesData.found = false;
-		restCountriesData.MSG = apiRes.response;
-		restCountriesData.restCountriesDetails = {};
-		return restCountriesData;
+		couData.found = false;
+		couData.MSG = apiRes.response;
+		couData.couDtl = {};
+		return couData;
 	}
 
 }
@@ -361,51 +354,49 @@ const getHomePage = (req,res)=>{
 * @returns: NA
 */
 const postTrip = async (req,res)=> {
-	//Start will blank tripData for every new destination
-	if (tripData.destination != req.body.destination) {
-		tripData = {};
+	//Start will blank tripDta for every new destination
+	if (tripDta.destination != req.body.destination) {
+		tripDta = {};
 	}
-	tripData.message = "POST received";
-	tripData.departureDate = new Date(req.body.departDate);
-	tripData.currentDate = new Date(req.body.currentDate);
-	tripData.destination  = req.body.destination;
-	tripData.departISODate = tripData.departureDate.toISOString().slice(0,10);
+	tripDta.message = "POST received";
+	tripDta.departDte = new Date(req.body.departDate);
+	tripDta.currDte = new Date(req.body.currentDate);
+	tripDta.destination  = req.body.destination;
+	tripDta.departISODte = tripDta.departDte.toISOString().slice(0,10);
 
 	//Get the number of days to go before the trip
-	tripData.daysToGo = diffInDates(tripData.departureDate,
-									tripData.currentDate);
+	tripDta.daysToGo = diffInDates(tripDta.departDte,
+									tripDta.currDte);
 
 	//Get the latitude and longitude f the trip destination
-	const geoAPIrespose = await fetchGeonames(tripData.destination);
-	tripData.geonamesDetails = processGeoData(geoAPIrespose);
-	if (!tripData.geonamesDetails.found) {
-		res.send(tripData);
+	const geoAPIrespose = await fetchGeonames(tripDta.destination);
+	tripDta.geoNmeDtls = processGeoData(geoAPIrespose);
+	if (!tripDta.geoNmeDtls.found) {
+		res.send(tripDta);
 		return
 	}
 
 	//Get weather data from weatherbit
 	const weatherAPIresponse = await fetchWeatherbit(
-									tripData.geonamesDetails.geoDetails.lat,
-									tripData.geonamesDetails.geoDetails.lng);
-	tripData.weatherbitDetails = processWeatherData(weatherAPIresponse,
-													tripData.daysToGo,
-													tripData.departISODate);
+												tripDta.geoNmeDtls.geoDtl.lat,
+												tripDta.geoNmeDtls.geoDtl.lng);
+	tripDta.weaBitDtls = processWeatherData(weatherAPIresponse,
+											tripDta.daysToGo,
+											tripDta.departISODte);
 
 	//Get images from pixabay
 	const pixabayAPIresponse = await fetchPixabay(
-									tripData.geonamesDetails.geoDetails.name);
-	tripData.pixabayDetails = await processImageData(
-							pixabayAPIresponse,
-							tripData.geonamesDetails.geoDetails.countryName);
-
+												tripDta.geoNmeDtls.geoDtl.name);
+	tripDta.pixBayDtls = await processImageData(
+										pixabayAPIresponse,
+										tripDta.geoNmeDtls.geoDtl.countryName);
 
 	//Get country details from REST countries API
 	const restCountriesAPIresponse = await fetchRestCountries(
-							tripData.geonamesDetails.geoDetails.countryName);
-	tripData.restCountriesDetails = processRestCountriesData(
-													restCountriesAPIresponse);
+										tripDta.geoNmeDtls.geoDtl.countryName);
+	tripDta.rstCntyDtls = processRestCountriesData(restCountriesAPIresponse);
 	//Send trip data as a response to this post request
-	res.send(tripData);
+	res.send(tripDta);
 }
 
 
@@ -463,7 +454,6 @@ const fetchGeonames = async (destination) => {
 * @return {object} apiRes: weather details received from API
 */
 const fetchWeatherbit = async (lat, lng) => {
-
 	let apiRes = { };
 
 	//Fetch from API
