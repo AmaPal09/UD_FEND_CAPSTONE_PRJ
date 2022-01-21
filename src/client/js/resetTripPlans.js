@@ -1,3 +1,10 @@
+//resetTripPlans.js
+//Hide trip plan blocks
+
+/*
+* F U N C T I O N S
+*/
+
 /*resetAllTripPlans FUNCTION
 * @description: Hide all trip plan details
 * @param: NA
