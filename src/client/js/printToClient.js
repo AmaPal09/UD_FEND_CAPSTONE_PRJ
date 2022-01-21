@@ -24,7 +24,6 @@ function printTripPlanImages(pixImgDtls) {
 		//TODO: Once loading of file from images is successful, uncomment below lines, remove current attribute set-up
 		document.getElementById("destinationImage").setAttribute("src",
 									pixImgDtls.imageDetails.webformatURL);
-		/*document.getElementById("destinationImage").setAttribute("src", `./images/defaultImg1.jpg`);*/
 	}
 	else {
 		document.getElementById("destinationImage").setAttribute("src", 												`./images/defaultImg1.jpg`);

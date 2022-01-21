@@ -17,11 +17,15 @@ module.exports = {
 			//Images
 			{
 				test: /\.(png|jpe?g|gif)$/i,
-				loader: 'file-loader',
-				options: {
-					outputPath: 'images',
-					name: '[name].[ext]',
-				},
+				type: 'asset/resource',
+				generator: {
+					filename: "images/[name][ext]",
+				}
+				// loader: 'file-loader',
+				// options: {
+				// 	outputPath: 'images',
+				// 	name: '[name].[ext]',
+				// },
 			},
 			//Fonts
 			{

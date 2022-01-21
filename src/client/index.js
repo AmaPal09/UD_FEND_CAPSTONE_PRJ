@@ -7,7 +7,7 @@ import (/*webpackPreload: true*/'./styles/main.scss');
 // import { addEvents, submitTripInfoForm } from './js/app.js';
 import { submitTripInfoForm } from './js/app.js';
 // import { submitTripInfoForm } from './js/app.js';
-// import defaultImg1 from './media/images/defaultImg1.jpg';
+import './media/images/defaultImg1.jpg';
 import templateImg1 from './media/images/templateImg1.jpg';
 
 import {lAnimation} from './js/mojsAni.js';
