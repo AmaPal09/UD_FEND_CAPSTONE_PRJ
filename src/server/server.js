@@ -162,7 +162,7 @@ const processWeatherData = (apiRes, daysToGo, departISODate) => {
 						weaData.found = true;
 						weaData.MSG = "weather record found for trip location and date."
 						// weaData.weather = apiRes.response.data[i];
-						console.log(apiRes.response.data[i]);
+						// console.log(apiRes.response.data[i]);
 						weaData.weather = { };
 						weaData.weather.high_temp =
 									apiRes.response.data[i].high_temp;
@@ -172,7 +172,7 @@ const processWeatherData = (apiRes, daysToGo, departISODate) => {
 							apiRes.response.data[i].weather.description;
 						weaData.weather.weaIcon =
 							apiRes.response.data[i].weather.icon;
-						console.log(weaData);
+						// console.log(weaData);
 						return weaData;
 					}
 				}
