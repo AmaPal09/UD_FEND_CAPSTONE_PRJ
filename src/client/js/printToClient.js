@@ -100,11 +100,11 @@ function printTripDestCountryDtls(ctyDtls) {
 
 		if (ctyDtls.couDtl.capital.length > 1) {
 			let contiString = ctyDtls.capital.toString();
-			descPara = descPara + ` Its capital cities are ` +
+			descPara = descPara + ` It's capital cities are ` +
 						`${contiString}.`;
 		}
 		else {
-			descPara = descPara + ` It capital city is ` +
+			descPara = descPara + ` It's capital city is ` +
 						`${ctyDtls.couDtl.capital[0]}.`;
 		}
 
