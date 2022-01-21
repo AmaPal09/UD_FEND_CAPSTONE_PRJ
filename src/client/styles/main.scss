@@ -32,6 +32,9 @@
     flex-direction: row;
     align-items: center;
     z-index: 1;
+    @include respond-screen-size("small") {
+    	justify-content: center;
+    }
 }
 
 .main__hero {
@@ -84,13 +87,21 @@ footer {
 	background-color: $secondary500;
 	padding: 10px;
 	margin: 20px 0 20px 0;
-	display: flex;
-	flex-direction: column;
+	// display: flex;
+	// flex-direction: column;
+	// @include respond-screen-size("medium") {
+	// 	flex-direction: row;
+	// }
+	// @include respond-screen-size("large") {
+	// 	flex-direction: row;
+	// }
+	display: grid;
+	grid-template-rows: auto;
 	@include respond-screen-size("medium") {
-		flex-direction: row;
+		grid-template-columns: 1fr 1fr;
 	}
 	@include respond-screen-size("large") {
-		flex-direction: row;
+		grid-template-columns: 1fr 1fr;
 	}
 }
 
