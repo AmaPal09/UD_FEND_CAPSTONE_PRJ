@@ -55,13 +55,82 @@ function printTripPlanWeather(weaDtls) {
 		document.getElementById("tempLow").innerText =
 											`${weaDtls.weather.low_temp}`;
 		document.getElementById("weatherText").innerText =
-									`${weaDtls.weather.weather.description} `;
+									`${weaDtls.weather.weaDesc} `;
 		const weatherIconSrc= `https://www.weatherbit.io/static/img/icons/` +
-										`${weaDtls.weather.weather.icon}.png`;
+										`${weaDtls.weather.weaIcon}.png`;
 		console.log(weatherIconSrc);
 		document.getElementById("weatherIcon").setAttribute("src", 																weatherIconSrc);
 	}
 }
+
+
+/*
+* printTripDestCountryDtls FUNCTION
+* @description: Prints information about destination country from server if     *			    avaliable to front end.
+* @param: {object} ctyDtls: Details of destination country
+* @returns: NA
+*/
+function printTripDestCountryDtls(ctyDtls) {
+
+	if (ctyDtls.found) {
+		console.log(ctyDtls.couDtl.continent);
+		let descPara = ''
+		descPara = `Officially known as ${ctyDtls.couDtl.officalNme}, it has a population of ${ctyDtls.couDtl.population}.`;
+
+		if (ctyDtls.couDtl.continent.length > 1) {
+			let contiString = ctyDtls.continent.toString();
+			descPara = descPara + ` It is located on the continents of ` +
+						`${contiString} in the ${ctyDtls.couDtl.region} ` +     ` region.`;
+		}
+		else {
+			descPara = descPara + ` It is located on the continent of ${ctyDtls.couDtl.continent[0]} in the ${ctyDtls.couDtl.region} region.`;
+		}
+
+		if (ctyDtls.couDtl.capital.length > 1) {
+			let contiString = ctyDtls.capital.toString();
+			descPara = descPara + ` Its capital cities are ` +
+						`${contiString}.`;
+		}
+		else {
+			descPara = descPara + ` It capital city is ` +
+						`${ctyDtls.couDtl.capital[0]}.`;
+		}
+
+		if (ctyDtls.couDtl.currency.length > 1) {
+			let contiString = ctyDtls.currency.toString();
+			descPara = descPara + ` Currencies accepted here are ` +
+						`${contiString}.`;
+		}
+		else {
+			descPara = descPara + ` Currency accepted here is ` +
+						`${ctyDtls.couDtl.currency[0]}.`;
+		}
+
+		if (ctyDtls.couDtl.languages.length > 1) {
+			let contiString = ctyDtls.languages.toString();
+			descPara = descPara + ` Official languages spoken here are ` +
+						`${contiString}.`;
+		}
+		else {
+			descPara = descPara + ` Official language here is ` +
+						`${ctyDtls.couDtl.languages[0]}.`;
+		}
+
+		descPara = descPara + ` Its flag is ${ctyDtls.couDtl.flags}.`
+		// document.getElementById("tempHigh").innerText =
+		// 									`${weaDtls.weather.high_temp}`;
+		// document.getElementById("tempLow").innerText =
+		// 									`${weaDtls.weather.low_temp}`;
+		// document.getElementById("weatherText").innerText =
+		// 							`${weaDtls.weather.weaDesc} `;
+		// const weatherIconSrc= `https://www.weatherbit.io/static/img/icons/` +
+		// 								`${weaDtls.weather.weaIcon}.png`;
+		// console.log(weatherIconSrc);
+		// document.getElementById("weatherIcon").setAttribute("src", 																weatherIconSrc);
+		document.getElementById("cntryDtls").innerText = descPara;
+	}
+}
+
 
 
 /*
@@ -78,6 +147,7 @@ function printTripDetails(tripDetails) {
 	printTripPlanImages(tripDetails.pixBayDtls);
 	printTripPlanCountdown(tripDetails);
 	printTripPlanWeather(tripDetails.weaBitDtls);
+	printTripDestCountryDtls(tripDetails.rstCntyDtls);
 
 }
 
