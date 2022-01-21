@@ -135,22 +135,20 @@ footer {
     @include respond-screen-size("medium") {
     	display: grid;
     	grid-template-columns: 1fr 1fr;
-    	grid-template-rows: 1fr 1fr;
-    	grid-template-areas: 'left right-top'
-    						 'left right-bottom';
+    	grid-template-rows: 1fr ;
+    	grid-template-areas: 'left right';
     	grid-gap: 20px;
     }
     @include respond-screen-size("large") {
     	display: grid;
     	grid-template-columns: 1fr 1fr;
     	grid-template-rows: 1fr 1fr;
-    	grid-template-areas: 'left right-top'
-    						 'left right-bottom';
+    	grid-template-areas: 'left right';
     	grid-gap: 20px;
     }
 }
 
-.trip-plan__images {
+.trip-plan--left {
 	@include respond-screen-size("medium") {
 		grid-area: left;
 	}
@@ -159,23 +157,49 @@ footer {
 	}
 }
 
-.trip-plan__countdown {
+.trip-plan--right {
 	@include respond-screen-size("medium") {
-		grid-area: right-top;
+		grid-area: right;
 	}
 	@include respond-screen-size("large") {
-		grid-area: right-top;
+		grid-area: right;
 	}
 }
+// .trip-plan__images {
+// 	@include respond-screen-size("medium") {
+// 		grid-area: left;
+// 	}
+// 	@include respond-screen-size("large") {
+// 		grid-area: left;
+// 	}
+// }
 
-.trip-plan__weather {
-	@include respond-screen-size("medium") {
-		grid-area: right-bottom;
-	}
-	@include respond-screen-size("large") {
-		grid-area: right-bottom;
-	}
-}
+// .trip-plan__countdown {
+// 	@include respond-screen-size("medium") {
+// 		grid-area: right-top;
+// 	}
+// 	@include respond-screen-size("large") {
+// 		grid-area: right-top;
+// 	}
+// }
+
+// .trip-plan__weather {
+// 	@include respond-screen-size("medium") {
+// 		grid-area: right-mid;
+// 	}
+// 	@include respond-screen-size("large") {
+// 		grid-area: right-bottom;
+// 	}
+// }
+
+// .trip-plan__country-details {
+// 	@include respond-screen-size("medium") {
+// 		grid-area: right-bottom;
+// 	}
+// 	@include respond-screen-size("large") {
+// 		grid-area: right-bottom;
+// 	}
+// }
 
 .weather__flex {
 	display: flex;
