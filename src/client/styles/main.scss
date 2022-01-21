@@ -165,41 +165,7 @@ footer {
 		grid-area: right;
 	}
 }
-// .trip-plan__images {
-// 	@include respond-screen-size("medium") {
-// 		grid-area: left;
-// 	}
-// 	@include respond-screen-size("large") {
-// 		grid-area: left;
-// 	}
-// }
 
-// .trip-plan__countdown {
-// 	@include respond-screen-size("medium") {
-// 		grid-area: right-top;
-// 	}
-// 	@include respond-screen-size("large") {
-// 		grid-area: right-top;
-// 	}
-// }
-
-// .trip-plan__weather {
-// 	@include respond-screen-size("medium") {
-// 		grid-area: right-mid;
-// 	}
-// 	@include respond-screen-size("large") {
-// 		grid-area: right-bottom;
-// 	}
-// }
-
-// .trip-plan__country-details {
-// 	@include respond-screen-size("medium") {
-// 		grid-area: right-bottom;
-// 	}
-// 	@include respond-screen-size("large") {
-// 		grid-area: right-bottom;
-// 	}
-// }
 
 .weather__flex {
 	display: flex;
