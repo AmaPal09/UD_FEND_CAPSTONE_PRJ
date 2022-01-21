@@ -161,7 +161,18 @@ const processWeatherData = (apiRes, daysToGo, departISODate) => {
 					if (apiRes.response.data[i].valid_date === departISODate) {
 						weaData.found = true;
 						weaData.MSG = "weather record found for trip location and date."
-						weaData.weather = apiRes.response.data[i];
+						// weaData.weather = apiRes.response.data[i];
+						console.log(apiRes.response.data[i]);
+						weaData.weather = { };
+						weaData.weather.high_temp =
+									apiRes.response.data[i].high_temp;
+						weaData.weather.low_temp =
+									apiRes.response.data[i].low_temp;
+						weaData.weather.weaDesc =
+							apiRes.response.data[i].weather.description;
+						weaData.weather.weaIcon =
+							apiRes.response.data[i].weather.icon;
+						console.log(weaData);
 						return weaData;
 					}
 				}
