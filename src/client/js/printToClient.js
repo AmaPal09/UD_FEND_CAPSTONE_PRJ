@@ -33,9 +33,15 @@ function printTripPlanImages(pixImgDtls) {
 * @returns: NA
 */
 function printTripPlanCountdown(tripDetails) {
-	document.getElementById("tripLoc").innerText =
+	if (tripDetails.geoNmeDtls.found) {
+		document.getElementById("tripLoc").innerText =
 						`${tripDetails.geoNmeDtls.geoDtl.name}, ` +
 						`${tripDetails.geoNmeDtls.geoDtl.countryName}`;
+	}
+	else {
+		document.getElementById("tripLoc").innerText = tripDetails.destination;
+	}
+
 	document.getElementById("tripDaysToGo").innerText = tripDetails.daysToGo;
 }
 
@@ -60,6 +66,12 @@ function printTripPlanWeather(weaDtls) {
 										`${weaDtls.weather.weaIcon}.png`;
 		console.log(weatherIconSrc);
 		document.getElementById("weatherIcon").setAttribute("src", 																weatherIconSrc);
+	}
+	else {
+		document.getElementById("tempHigh").innerText ='';
+		document.getElementById("tempLow").innerText = '';
+		document.getElementById("weatherText").innerText = '';
+		document.getElementById("weatherIcon").setAttribute("src", '');
 	}
 }
 
@@ -117,17 +129,11 @@ function printTripDestCountryDtls(ctyDtls) {
 		}
 
 		descPara = descPara + ` Its flag is ${ctyDtls.couDtl.flags}.`
-		// document.getElementById("tempHigh").innerText =
-		// 									`${weaDtls.weather.high_temp}`;
-		// document.getElementById("tempLow").innerText =
-		// 									`${weaDtls.weather.low_temp}`;
-		// document.getElementById("weatherText").innerText =
-		// 							`${weaDtls.weather.weaDesc} `;
-		// const weatherIconSrc= `https://www.weatherbit.io/static/img/icons/` +
-		// 								`${weaDtls.weather.weaIcon}.png`;
-		// console.log(weatherIconSrc);
-		// document.getElementById("weatherIcon").setAttribute("src", 																weatherIconSrc);
+
 		document.getElementById("cntryDtls").innerText = descPara;
+	}
+	else {
+		document.getElementById("cntryDtls").innerText = '';
 	}
 }
 
