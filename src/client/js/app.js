@@ -7,6 +7,7 @@
 import { validateInputs } from './inputValidations.js';
 import { validateFutureDate } from './inputValidations.js';
 import { postAndPrintTrip } from './routesNreqs.js';
+import { resetAllTripPlans } from './resetTripPlans.js';
 
 
 /*
@@ -34,7 +35,7 @@ import { postAndPrintTrip } from './routesNreqs.js';
 function submitTripInfoForm(e){
 	e.preventDefault();
 	console.log("Enter submitTripInfoForm()");
-
+	resetAllTripPlans();
 	// Get user input
 	const tripDestination = document.getElementById('tripDestination').value;
 	const tripStartDate = document.getElementById('tripStartDate').value;

@@ -1,6 +1,12 @@
 //printToClient.js
 //load data received from server to the client
 
+import { hideTripPlanSection ,
+		hideTripPlanImages ,
+		hideTripPlanCountdown ,
+		hideTripPlanWeather ,
+		hideTripDestCountryDtls } from './resetTripPlans.js';
+
 
 /*
 * F U N C T I O N S
@@ -75,6 +81,7 @@ function printTripPlanWeather(weaDtls) {
 		document.getElementById("tempLow").innerText = '';
 		document.getElementById("weatherText").innerText = '';
 		document.getElementById("weatherIcon").setAttribute("src", '');
+		hideTripPlanWeather();
 	}
 }
 
@@ -138,6 +145,7 @@ function printTripDestCountryDtls(ctyDtls) {
 	}
 	else {
 		document.getElementById("cntryDtls").innerText = '';
+		hideTripDestCountryDtls()
 	}
 }
 
@@ -182,8 +190,8 @@ function showTripPlanWeather() {
 }
 
 
-/* showTripPlanWeather FUNCTION
-* @description: Shows weather for the trip plan
+/* showTripDestCountryDtls FUNCTION
+* @description: Shows info details about destination country for the trip plan
 * @param: NA
 * @returns: NA
 */
