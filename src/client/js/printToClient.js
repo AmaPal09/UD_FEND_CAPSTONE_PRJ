@@ -23,6 +23,7 @@ function printTripPlanImages(pixImgDtls) {
 	else {
 		document.getElementById("destinationImage").setAttribute("src", 												`./images/defaultImg1.jpg`);
 	}
+	showTripPlanImages();
 }
 
 
@@ -43,6 +44,7 @@ function printTripPlanCountdown(tripDetails) {
 	}
 
 	document.getElementById("tripDaysToGo").innerText = tripDetails.daysToGo;
+	showTripPlanCountdown();
 }
 
 
@@ -66,6 +68,7 @@ function printTripPlanWeather(weaDtls) {
 										`${weaDtls.weather.weaIcon}.png`;
 		console.log(weatherIconSrc);
 		document.getElementById("weatherIcon").setAttribute("src", 																weatherIconSrc);
+		showTripPlanWeather();
 	}
 	else {
 		document.getElementById("tempHigh").innerText ='';
@@ -131,12 +134,62 @@ function printTripDestCountryDtls(ctyDtls) {
 		descPara = descPara + ` Its flag is ${ctyDtls.couDtl.flags}.`
 
 		document.getElementById("cntryDtls").innerText = descPara;
+		showTripDestCountryDtls()
 	}
 	else {
 		document.getElementById("cntryDtls").innerText = '';
 	}
 }
 
+
+/* showTripPlanSection FUNCTION
+* @description: Shows images for the trip plan
+* @param: NA
+* @returns: NA
+*/
+function showTripPlanSection() {
+	document.getElementsByClassName("trip-plan")[0].classList.remove('hide');
+}
+
+
+/* showTripPlanImages FUNCTION
+* @description: Shows images for the trip plan
+* @param: NA
+* @returns: NA
+*/
+function showTripPlanImages() {
+	document.getElementsByClassName("trip-plan__images")[0].classList.remove('hide');
+}
+
+
+/* showTripPlanCountdown FUNCTION
+* @description: Shows countdown details for the trip plan
+* @param: NA
+* @returns: NA
+*/
+function showTripPlanCountdown() {
+	document.getElementsByClassName("trip-plan__countdown")[0].classList.remove('hide');
+}
+
+
+/* showTripPlanWeather FUNCTION
+* @description: Shows weather for the trip plan
+* @param: NA
+* @returns: NA
+*/
+function showTripPlanWeather() {
+	document.getElementsByClassName("trip-plan__weather")[0].classList.remove('hide');
+}
+
+
+/* showTripPlanWeather FUNCTION
+* @description: Shows weather for the trip plan
+* @param: NA
+* @returns: NA
+*/
+function showTripDestCountryDtls() {
+	document.getElementsByClassName("trip-plan__country-details")[0].classList.remove('hide');
+}
 
 
 /*
@@ -150,6 +203,7 @@ function printTripDetails(tripDetails) {
 
 	console.log("Enter printTripDetails()");
 	console.log(tripDetails);
+	showTripPlanSection();
 	printTripPlanImages(tripDetails.pixBayDtls);
 	printTripPlanCountdown(tripDetails);
 	printTripPlanWeather(tripDetails.weaBitDtls);
