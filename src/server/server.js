@@ -382,6 +382,12 @@ const postTrip = async (req,res)=> {
 	const geoAPIrespose = await fetchGeonames(tripDta.destination);
 	tripDta.geoNmeDtls = processGeoData(geoAPIrespose);
 	if (!tripDta.geoNmeDtls.found) {
+		tripDta.weaBitDtls = {};
+		tripDta.weaBitDtls.found = false;
+		tripDta.pixBayDtls = {};
+		tripDta.pixBayDtls.found = false;
+		tripDta.rstCntyDtls = {};
+		tripDta.rstCntyDtls.found = false;
 		res.send(tripDta);
 		return
 	}
