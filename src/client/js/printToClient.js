@@ -211,13 +211,14 @@ function printTripDetails(tripDetails) {
 
 	console.log("Enter printTripDetails()");
 	console.log(tripDetails);
-	showTripPlanSection();
 	printTripPlanImages(tripDetails.pixBayDtls);
 	printTripPlanCountdown(tripDetails);
 	printTripPlanWeather(tripDetails.weaBitDtls);
 	printTripDestCountryDtls(tripDetails.rstCntyDtls);
+	showTripPlanSection();
 
 }
+
 
 /*
 * E X P O R T   M O D U L E S
