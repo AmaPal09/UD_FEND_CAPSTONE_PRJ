@@ -34,7 +34,7 @@ import { resetAllTripPlans } from './resetTripPlans.js';
 */
 function submitTripInfoForm(e){
 	e.preventDefault();
-	console.log("Enter submitTripInfoForm()");
+	// console.log("Enter submitTripInfoForm()");
 	resetAllTripPlans();
 	// Get user input
 	const tripDestination = document.getElementById('tripDestination').value;
@@ -43,7 +43,7 @@ function submitTripInfoForm(e){
 	// Validate user input for blanks
 	const inputsPresent = validateInputs(tripDestination, tripStartDate);
 	if (inputsPresent.valid) {
-		console.log(inputsPresent.msg);
+		// console.log(inputsPresent.msg);
 
 		// Date handling
 		const currDate = new Date();
@@ -53,7 +53,7 @@ function submitTripInfoForm(e){
 		//Validate trip start date is bigger the current Date
 		const validDepartureDate = validateFutureDate(futureDate, currDate);
 		if (validDepartureDate) {
-			console.log('Trip start date is bigger than current Date');
+			// console.log('Trip start date is bigger than current Date');
 
 			// Compile tripData
 			let tripData = { departDate: futureDate,
@@ -64,12 +64,14 @@ function submitTripInfoForm(e){
 			postAndPrintTrip(tripData);
 		}
 		else {
-			console.log("Something went wrong");
+			alert("Select a future date for derparture date");
+			// console.log("Something went wrong");
 		}
 
 	}
 	else{
-		console.log(inputsPresent.msg);
+		alert(inputsPresent.msg);
+		// console.log(inputsPresent.msg);
 	}
 }
 
