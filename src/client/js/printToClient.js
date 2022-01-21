@@ -119,7 +119,7 @@ function printTripDestCountryDtls(ctyDtls) {
 		}
 
 		if (ctyDtls.couDtl.languages.length > 1) {
-			let contiString = ctyDtls.languages.toString();
+			let contiString = ctyDtls.couDtl.languages.toString();
 			descPara = descPara + ` Official languages spoken here are ` +
 						`${contiString}.`;
 		}
