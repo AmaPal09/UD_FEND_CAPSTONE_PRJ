@@ -89,42 +89,44 @@ const tripData = {
 
 
 document.body.innerHTML = `
-		<section class="trip-plan hide">
-			<div class="trip-plan--left">
-				<!-- Images for trip destination  -->
-				<div class="trip-plan__images hide">
-					<img src="" id="destinationImage" class="img">
+	<section class="trip-plan hide">
+		<div class="trip-plan--left">
+			<!-- Images for trip destination  -->
+			<div class="trip-plan__images hide">
+				<img src="" id="destinationImage" class="img">
+			</div>
+		</div>
+
+		<div class="trip-plan--right">
+			<!-- Countdown to departure -->
+			<div class="trip-plan__countdown hide">
+				<p>Trip to <span id="tripLoc"></span> is <span id="tripDaysToGo"></span> days away</p>
+			</div>
+
+			<!-- Weather at destination -->
+			<div class="trip-plan__weather hide">
+				<p>Typical weather for then is:</p>
+				<p id="tempRange"> High: <span id="tempHigh"></span>, Low: <span id="tempLow"></span></p>
+				<div class="weather__flex">
+					<p id="weatherText"></p>
+					<!-- <br> <br> -->
+					<img id="weatherIcon" src="" alt="Weather icon">
 				</div>
 			</div>
 
-			<div class="trip-plan--right">
-				<!-- Countdown to departure -->
-				<div class="trip-plan__countdown hide">
-					<p>Trip to <span id="tripLoc"></span> is <span id="tripDaysToGo"></span> days away</p>
-				</div>
-
-				<!-- Weather at destination -->
-				<div class="trip-plan__weather hide">
-					<p>Typical weather for then is:</p>
-					<p id="tempRange"> High: <span id="tempHigh"></span>, Low: <span id="tempLow"></span></p>
-					<div class="weather__flex">
-						<p id="weatherText"></p>
-						<!-- <br> <br> -->
-						<img id="weatherIcon" src="" alt="Weather icon">
-					</div>
-				</div>
-
-				<!-- Destination country details -->
-				<div class="trip-plan__country-details hide">
-					<p id="cntryDtls">
-					</p>
-				</div>
+			<!-- Destination country details -->
+			<div class="trip-plan__country-details hide">
+				<p id="cntryDtls">
+				</p>
 			</div>
+		</div>
 
-		</section>
-	`
+	</section>
+`
 
 // -------------------------------------------------------------------
+// printTripDetails
+
 describe("Print Trip Details from server to client", ()=> {
 	// Test that printTripDetails function exists
 	test("Validate that the details from server are printed to the DOM", () => {
@@ -238,7 +240,7 @@ describe("Print image details and display image", () => {
 
 // -------------------------------------------------------------------
 // showTripPlanImages()
-//Validate hide class removal for image display
+// Validate hide class removal for image display
 describe("Validate showTripPlanImages shows image", ()=> {
 	//Validate that showTripPlanImages removes the hide class
 	test("Validate that showTripPlanImages removes the hide class from image div", () => {
