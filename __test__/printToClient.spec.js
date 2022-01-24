@@ -4,12 +4,13 @@
 
 import {printTripDetails} from '../src/client/js/printToClient'
 import {printTripPlanImages} from '../src/client/js/printToClient'
+import {showTripPlanImages} from '../src/client/js/printToClient'
 import {printTripPlanCountdown} from '../src/client/js/printToClient'
+import {showTripPlanCountdown} from '../src/client/js/printToClient'
+//done
 import {printTripPlanWeather} from '../src/client/js/printToClient'
 import {printTripDestCountryDtls} from '../src/client/js/printToClient'
 import {showTripPlanSection} from '../src/client/js/printToClient'
-import {showTripPlanCountdown} from '../src/client/js/printToClient'
-import {showTripPlanImages} from '../src/client/js/printToClient'
 
 // import * as printToClient from '../src/client/js/printToClient'
 
@@ -122,7 +123,7 @@ document.body.innerHTML = `
 		</section>
 	`
 
-
+// -------------------------------------------------------------------
 describe("Print Trip Details from server to client", ()=> {
 	// Test that printTripDetails function exists
 	test("Validate that the details from server are printed to the DOM", () => {
@@ -131,6 +132,8 @@ describe("Print Trip Details from server to client", ()=> {
 });
 
 
+// -------------------------------------------------------------------
+// printTripPlanImages()
 //Validate image display
 describe("Print image details and display image", () => {
 	//Test that printTripPlanImages function exists
@@ -170,6 +173,8 @@ describe("Print image details and display image", () => {
 });
 
 
+// -------------------------------------------------------------------
+// showTripPlanImages()
 //Validate hide class removal for image display
 describe("Validate showTripPlanImages shows image", ()=> {
 	//Validate that showTripPlanImages removes the hide class
@@ -183,6 +188,8 @@ describe("Validate showTripPlanImages shows image", ()=> {
 });
 
 
+// -------------------------------------------------------------------
+//  printTripPlanCountdown()
 //Validate destination and countdown days are printed printTripPlanCountdown
 describe("Validate that countdown days and destination is printed", () => {
 
@@ -225,6 +232,7 @@ describe("Validate that countdown days and destination is printed", () => {
 });
 
 
+// -------------------------------------------------------------------
 // showTripPlanCountdown
 //Validate hide class removal for countdown display
 describe("Validate showTripPlanCountdown shows countdown to destination", ()=> {
@@ -235,5 +243,27 @@ describe("Validate showTripPlanCountdown shows countdown to destination", ()=> {
 		showTripPlanCountdown();
 
 		expect(elementArray[0].classList).not.toContain("hide");
+	});
+});
+
+
+// -------------------------------------------------------------------
+// printTripPlanWeather
+// Validate weather data is printed when availalbe and displayed
+describe("Validate weather data is printed when availalbe and displayed", () => {
+	const highTempEle = document.getElementById("tempHigh");
+	const lowTempEle = document.getElementById("tempLow");
+	const textDtls = document.getElementById("weatherText");
+	const iconDtls = document.getElementById("weatherIcon");
+
+	test("Weather data is printed and displayed when available", () => {
+		printTripPlanWeather(tripData.weaBitDtls);
+
+		expect(highTempEle.innerText).toBe(`${tripData.weaBitDtls.weather.high_temp}`);
+		expect(lowTempEle.innerText).toBe(`${tripData.weaBitDtls.weather.low_temp}`);
+		expect(textDtls.innerText).toMatch(tripData.weaBitDtls.weather.weaDesc);
+		expect(iconDtls.getAttribute("src")).toBe(`https://www.weatherbit.io/static/img/icons/${tripData.weaBitDtls.weather.weaIcon}.png`);
+
+		expect(highTempEle.parentElement.parentElement.classList).not.toContain("hide");
 	});
 });

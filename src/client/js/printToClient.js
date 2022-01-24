@@ -229,5 +229,6 @@ function printTripDetails(tripDetails) {
 export{ printTripDetails,
 		printTripPlanCountdown,
 		printTripPlanImages,
+		printTripPlanWeather,
 		showTripPlanImages,
 		showTripPlanCountdown };
