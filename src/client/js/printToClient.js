@@ -226,4 +226,8 @@ function printTripDetails(tripDetails) {
 /*
 * E X P O R T   M O D U L E S
 */
-export{ printTripDetails };
+export{ printTripDetails,
+		printTripPlanCountdown,
+		printTripPlanImages,
+		showTripPlanImages,
+		showTripPlanCountdown };
