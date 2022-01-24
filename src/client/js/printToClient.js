@@ -103,16 +103,16 @@ function printTripDestCountryDtls(ctyDtls) {
 		descPara = `Officially known as ${ctyDtls.couDtl.officalNme}, it has a population of ${ctyDtls.couDtl.population}.`;
 
 		if (ctyDtls.couDtl.continent.length > 1) {
-			let contiString = ctyDtls.continent.toString();
+			let contiString = ctyDtls.couDtl.continent.toString();
 			descPara = descPara + ` It is located on the continents of ` +
-						`${contiString} in the ${ctyDtls.couDtl.region} ` +     ` region.`;
+						`${contiString} in the ${ctyDtls.couDtl.region} ` +     `region.`;
 		}
 		else {
 			descPara = descPara + ` It is located on the continent of ${ctyDtls.couDtl.continent[0]} in the ${ctyDtls.couDtl.region} region.`;
 		}
 
 		if (ctyDtls.couDtl.capital.length > 1) {
-			let contiString = ctyDtls.capital.toString();
+			let contiString = ctyDtls.couDtl.capital.toString();
 			descPara = descPara + ` It's capital cities are ` +
 						`${contiString}.`;
 		}
@@ -122,7 +122,7 @@ function printTripDestCountryDtls(ctyDtls) {
 		}
 
 		if (ctyDtls.couDtl.currency.length > 1) {
-			let contiString = ctyDtls.currency.toString();
+			let contiString = ctyDtls.couDtl.currency.toString();
 			descPara = descPara + ` Currencies accepted here are ` +
 						`${contiString}.`;
 		}
