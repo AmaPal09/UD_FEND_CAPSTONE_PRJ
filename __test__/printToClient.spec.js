@@ -130,6 +130,68 @@ describe("Print Trip Details from server to client", ()=> {
 	test("Validate that the details from server are printed to the DOM", () => {
 		expect(printTripDetails).toBeDefined();
 	});
+
+	//Validate that printTripDetails call appropriate functions to print test data
+	test("Validate that printTripDetails call appropriate functions to print test data", () => {
+		const pixaImg = document.getElementById("destinationImage");
+
+		const tripLoc = document.getElementById("tripLoc");
+		const countDown = document.getElementById("tripDaysToGo");
+
+		const highTempEle = document.getElementById("tempHigh");
+		const lowTempEle = document.getElementById("tempLow");
+		const textDtls = document.getElementById("weatherText");
+		const iconDtls = document.getElementById("weatherIcon");
+
+		const ctyDtls = document.getElementById("cntryDtls");
+
+		const ctyDesc = `Officially known as ` +
+					`${tripData.rstCntyDtls.couDtl.officalNme}, it has ` +
+					`a population of ` +
+					`${tripData.rstCntyDtls.couDtl.population}. It is ` +
+					`located on the continent of ` +
+					`${tripData.rstCntyDtls.couDtl.continent[0]} in the ` +
+					`${tripData.rstCntyDtls.couDtl.region} region. ` +
+					`It's capital city is ` +
+					`${tripData.rstCntyDtls.couDtl.capital[0]}. Currency ` +
+					`accepted here is ` +
+					`${tripData.rstCntyDtls.couDtl.currency[0]}. Official ` +
+					`language here is ` +
+					`${tripData.rstCntyDtls.couDtl.languages[0]}. Its ` +
+					`flag is ${tripData.rstCntyDtls.couDtl.flags}.`;
+
+		const elementArray = document.getElementsByClassName("trip-plan");
+
+		printTripDetails(tripData);
+
+		expect(pixaImg.getAttribute('src')).toBe("https://pixabay.com/get/g63f25c983ced52cf67a87ddb1e5bd158f46fea9438e2d2c17e2b8af545102ed94f809b16bb3ebf899333ea60d30288131fac01674c5df4bb540d35a3c8482036_640.jpg");
+
+		expect(pixaImg.parentElement.classList).not.toContain("hide");
+
+		expect(countDown.innerText).toBe(tripData.daysToGo);
+
+		expect(tripLoc.innerText).toBe(`${tripData.geoNmeDtls.geoDtl.name}, ${tripData.geoNmeDtls.geoDtl.countryName}`);
+
+		expect(countDown.parentElement.parentElement.classList).not.toContain("hide");
+
+		expect(tripLoc.parentElement.parentElement.classList).not.toContain("hide");
+
+		expect(highTempEle.innerText).toBe(`${tripData.weaBitDtls.weather.high_temp}`);
+
+		expect(lowTempEle.innerText).toBe(`${tripData.weaBitDtls.weather.low_temp}`);
+
+		expect(textDtls.innerText).toMatch(tripData.weaBitDtls.weather.weaDesc);
+
+		expect(iconDtls.getAttribute("src")).toBe(`https://www.weatherbit.io/static/img/icons/${tripData.weaBitDtls.weather.weaIcon}.png`);
+
+		expect(highTempEle.parentElement.parentElement.classList).not.toContain("hide");
+
+		expect(ctyDtls.innerText).toBe(`${ctyDesc}`);
+
+		expect(ctyDtls.parentElement.classList).not.toContain("hide");
+
+		expect(elementArray[0].classList).not.toContain("hide");
+	});
 });
 
 
@@ -205,6 +267,10 @@ describe("Validate that countdown days and destination is printed", () => {
 		expect(countDown.innerText).toBe(tripData.daysToGo);
 
 		expect(tripLoc.innerText).toBe(`${tripData.geoNmeDtls.geoDtl.name}, ${tripData.geoNmeDtls.geoDtl.countryName}`);
+
+		expect(countDown.parentElement.parentElement.classList).not.toContain("hide");
+
+		expect(tripLoc.parentElement.parentElement.classList).not.toContain("hide");
 	});
 
 	//Validate that trip destination printed from tripData when not available from geoNames details
@@ -267,6 +333,46 @@ describe("Validate weather data is printed when availalbe and displayed", () => 
 
 		expect(highTempEle.parentElement.parentElement.classList).not.toContain("hide");
 	});
+
+	//Validate that no data is printed for weather when non is available from server
+	test("Validate that no data is printed for weather when no data is available from server", () => {
+
+		const weaBitDtls2 = {
+			MSG: "No weather data found for this location.",
+			found: false,
+			weather: {},
+		};
+
+		printTripPlanWeather(weaBitDtls2);
+
+		expect(highTempEle.innerText).toBe("");
+		expect(lowTempEle.innerText).toBe("");
+		expect(textDtls.innerText).toBe("");
+		expect(iconDtls.getAttribute("src")).toBe('');
+
+		expect(highTempEle.parentElement.parentElement.classList).toContain("hide");
+
+	});
+
+	//Validate that no data is printed for weather when trip is more than 16 days away
+	test("Validate that no data is printed for weather when trip is more than 16 dyss away", () => {
+
+		const weaBitDtls3 = {
+			MSG: "Forcast for this date is not available. Please check upto 16 days before the trip",
+			found: false,
+			weather: {},
+		};
+
+		printTripPlanWeather(weaBitDtls3);
+
+		expect(highTempEle.innerText).toBe("");
+		expect(lowTempEle.innerText).toBe("");
+		expect(textDtls.innerText).toBe("");
+		expect(iconDtls.getAttribute("src")).toBe('');
+
+		expect(highTempEle.parentElement.parentElement.classList).toContain("hide");
+
+	});
 });
 
 
@@ -278,7 +384,7 @@ describe("Validate showTripPlanWeather shows weather", ()=> {
 	test("Validate that showTripPlanWeather removes the hide class from weather display", () => {
 		const elementArray = document.getElementsByClassName("trip-plan__weather");
 
-		showTripPlanCountdown();
+		showTripPlanWeather();
 
 		expect(elementArray[0].classList).not.toContain("hide");
 	});
@@ -304,12 +410,72 @@ describe("Validate country details are printed when availalbe and displayed", ()
 					`${tripData.rstCntyDtls.couDtl.currency[0]}. Official ` +
 					`language here is ` +
 					`${tripData.rstCntyDtls.couDtl.languages[0]}. Its ` +
-					`flag is ${tripData.rstCntyDtls.couDtl.flags}.`
+					`flag is ${tripData.rstCntyDtls.couDtl.flags}.`;
 
 	test("Country details are printed and displayed when available", () => {
 		printTripDestCountryDtls(tripData.rstCntyDtls);
 
 		expect(ctyDtls.innerText).toBe(`${ctyDesc}`);
+
+		expect(ctyDtls.parentElement.classList).not.toContain("hide");
+	});
+
+	//Validate that no data is printed for country details when none is available from server
+	test("Validate that no data is printed for country details when no data is available from server", () => {
+
+		const rstCntyDtls2 = {
+			MSG: "No details found for country",
+			found: false,
+			couDtl: {}
+		};
+
+		printTripDestCountryDtls(rstCntyDtls2);
+
+		expect(ctyDtls.innerText).toBe("");
+
+		expect(ctyDtls.parentElement.classList).toContain("hide");
+
+	});
+
+	//Validate that pcountry details are printed correctly when there are mutiple currencies, languages to pick from
+	test("Correct country details are printed and displayed when available", () => {
+
+		const rstCntyDtls3 = {
+			MSG: "Details found for country",
+			found: true,
+			couDtl: {
+			capital: ['C1', 'C2'],
+			continent: ['Europe', 'Asia'],
+			currency: ['Euro', 'USD'],
+			flags: "🇳🇱",
+			languages: ['Dutch', 'Englist'],
+			officalNme: "Kingdom of Faries",
+			population: 300,
+			region: "Eastern Europe",
+			}
+		};
+
+		const ctyDesc3 = `Officially known as ` +
+					`${rstCntyDtls3.couDtl.officalNme}, it has ` +
+					`a population of ` +
+					`${rstCntyDtls3.couDtl.population}. It is ` +
+					`located on the continents of ` +
+					`${rstCntyDtls3.couDtl.continent[0]},` +
+					`${rstCntyDtls3.couDtl.continent[1]} in the ` +
+					`${rstCntyDtls3.couDtl.region} region. ` +
+					`It's capital cities are ` +
+					`${rstCntyDtls3.couDtl.capital[0]},` +
+					`${rstCntyDtls3.couDtl.capital[1]}. Currencies ` +
+					`accepted here are ` +
+					`${rstCntyDtls3.couDtl.currency[0]},` +
+					`${rstCntyDtls3.couDtl.currency[1]}. Official ` +
+					`languages spoken here are ` +
+					`${rstCntyDtls3.couDtl.languages[0]},` +
+					`${rstCntyDtls3.couDtl.languages[1]}. Its ` +
+					`flag is ${tripData.rstCntyDtls.couDtl.flags}.`;
+		printTripDestCountryDtls(rstCntyDtls3);
+
+		expect(ctyDtls.innerText).toBe(`${ctyDesc3}`);
 
 		expect(ctyDtls.parentElement.classList).not.toContain("hide");
 	});
