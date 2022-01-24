@@ -15,7 +15,7 @@
 */
 function validateInputs(destination, date){
 
-	console.log("Enter validateInputs()");
+	// console.log("Enter validateInputs()");
 	const result = {};
 
 	if (destination == "" || date == "") {
@@ -52,9 +52,9 @@ function validateInputs(destination, date){
 */
 function validateFutureDate(fDate, cDate) {
 
-	console.log("Enter validateFutureDate()");
-	console.log(fDate);
-	console.log(cDate);
+	// console.log("Enter validateFutureDate()");
+	// console.log(fDate);
+	// console.log(cDate);s
 	if (fDate.getTime() > cDate.getTime()){
 		return true;
 	}
