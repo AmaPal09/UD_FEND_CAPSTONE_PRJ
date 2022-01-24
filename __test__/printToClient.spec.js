@@ -7,10 +7,11 @@ import {printTripPlanImages} from '../src/client/js/printToClient'
 import {showTripPlanImages} from '../src/client/js/printToClient'
 import {printTripPlanCountdown} from '../src/client/js/printToClient'
 import {showTripPlanCountdown} from '../src/client/js/printToClient'
-//done
 import {printTripPlanWeather} from '../src/client/js/printToClient'
 import {printTripDestCountryDtls} from '../src/client/js/printToClient'
 import {showTripPlanSection} from '../src/client/js/printToClient'
+import {showTripPlanWeather} from '../src/client/js/printToClient'
+import {showTripDestCountryDtls} from '../src/client/js/printToClient'
 
 // import * as printToClient from '../src/client/js/printToClient'
 
@@ -265,5 +266,81 @@ describe("Validate weather data is printed when availalbe and displayed", () => 
 		expect(iconDtls.getAttribute("src")).toBe(`https://www.weatherbit.io/static/img/icons/${tripData.weaBitDtls.weather.weaIcon}.png`);
 
 		expect(highTempEle.parentElement.parentElement.classList).not.toContain("hide");
+	});
+});
+
+
+// -------------------------------------------------------------------
+// showTripPlanWeather
+// Validate hide class removal from for weather display
+describe("Validate showTripPlanWeather shows weather", ()=> {
+	//Validate that showTripPlanCountdown removes the hide class
+	test("Validate that showTripPlanWeather removes the hide class from weather display", () => {
+		const elementArray = document.getElementsByClassName("trip-plan__weather");
+
+		showTripPlanCountdown();
+
+		expect(elementArray[0].classList).not.toContain("hide");
+	});
+});
+
+
+// -------------------------------------------------------------------
+// printTripDestCountryDtls
+// Validate country details when available are displayed
+describe("Validate country details are printed when availalbe and displayed", () => {
+	const ctyDtls = document.getElementById("cntryDtls");
+
+	const ctyDesc = `Officially known as ` +
+					`${tripData.rstCntyDtls.couDtl.officalNme}, it has ` +
+					`a population of ` +
+					`${tripData.rstCntyDtls.couDtl.population}. It is ` +
+					`located on the continent of ` +
+					`${tripData.rstCntyDtls.couDtl.continent[0]} in the ` +
+					`${tripData.rstCntyDtls.couDtl.region} region. ` +
+					`It's capital city is ` +
+					`${tripData.rstCntyDtls.couDtl.capital[0]}. Currency ` +
+					`accepted here is ` +
+					`${tripData.rstCntyDtls.couDtl.currency[0]}. Official ` +
+					`language here is ` +
+					`${tripData.rstCntyDtls.couDtl.languages[0]}. Its ` +
+					`flag is ${tripData.rstCntyDtls.couDtl.flags}.`
+
+	test("Country details are printed and displayed when available", () => {
+		printTripDestCountryDtls(tripData.rstCntyDtls);
+
+		expect(ctyDtls.innerText).toBe(`${ctyDesc}`);
+
+		expect(ctyDtls.parentElement.classList).not.toContain("hide");
+	});
+});
+
+
+// -------------------------------------------------------------------
+// showTripDestCountryDtls
+// Validate hide class removal from for country details display
+describe("Validate showTripDestCountryDtls shows weather", ()=> {
+	//Validate that showTripPlanCountdown removes the hide class
+	test("Validate that showTripDestCountryDtls removes the hide class from weather display", () => {
+		const elementArray = document.getElementsByClassName("trip-plan__country-details");
+
+		showTripDestCountryDtls();
+
+		expect(elementArray[0].classList).not.toContain("hide");
+	});
+});
+
+
+// -------------------------------------------------------------------
+// showTripPlanSection
+// Validate hide class removal from for trip plan section
+describe("Validate showTripPlanSection shows trip plan section", ()=> {
+	//Validate that showTripPlanCountdown removes the hide class
+	test("Validate that showTripPlanSection removes the hide class from trip plan section", () => {
+		const elementArray = document.getElementsByClassName("trip-plan");
+
+		showTripPlanSection();
+
+		expect(elementArray[0].classList).not.toContain("hide");
 	});
 });

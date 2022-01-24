@@ -230,5 +230,9 @@ export{ printTripDetails,
 		printTripPlanCountdown,
 		printTripPlanImages,
 		printTripPlanWeather,
+		printTripDestCountryDtls,
 		showTripPlanImages,
-		showTripPlanCountdown };
+		showTripPlanCountdown,
+		showTripPlanWeather,
+		showTripDestCountryDtls,
+		showTripPlanSection };
