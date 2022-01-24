@@ -45,6 +45,7 @@ function printTripPlanCountdown(tripDetails) {
 						`${tripDetails.geoNmeDtls.geoDtl.countryName}`;
 	}
 	else {
+		alert("Geonames could not find this location. Please verify that your destination is correct to obtain weather and country details");
 		document.getElementById("tripLoc").innerText = tripDetails.destination;
 	}
 
@@ -76,6 +77,9 @@ function printTripPlanWeather(weaDtls) {
 		showTripPlanWeather();
 	}
 	else {
+		if (weaDtls.MSG == "Forcast for this date is not available. Please check upto 16 days before the trip") {
+			alert("Forcast for this date is not available. Please check upto 16 days before the trip");
+		}
 		document.getElementById("tempHigh").innerText ='';
 		document.getElementById("tempLow").innerText = '';
 		document.getElementById("weatherText").innerText = '';
