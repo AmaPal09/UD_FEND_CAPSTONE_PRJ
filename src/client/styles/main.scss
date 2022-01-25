@@ -38,7 +38,7 @@
 }
 
 .main__hero {
-	background-color: $primary500;
+	background-color: $accent500;
 	padding: 10px;
 	// margin: 0px 0 20px 0;
 }
@@ -84,7 +84,7 @@ footer {
 }
 
 .trip-info {
-	background-color: $secondary500;
+	background-color: $primary200;
 	padding: 10px;
 	margin: 20px 0 20px 0;
 	// display: flex;
@@ -127,6 +127,10 @@ input {
 	&::-ms-input-placeholder { /* Microsoft Edge */
 	color: black;
 	}
+
+	&:hover {
+		background: $primary500;
+	}
 }
 
 /* Change the white to any color */
@@ -134,7 +138,12 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active{
-    -webkit-box-shadow: 0 0 0 30px $secondary500 inset !important;
+    -webkit-box-shadow: 0 0 0 30px $primary200 inset !important;
+
+    &:hover {
+    	-webkit-box-shadow: 0 0 0 30px $primary500 inset !important;
+
+    }
 }
 
 /*Change text in autofill textbox*/
@@ -164,42 +173,50 @@ input:-webkit-autofill{
 //Animation elements and classes
 .animeText {
 	font-family: $titleFontBold;
-	font-size: 1.5rem;
+	font-size: 1.8rem;
 	letter-spacing: 0.04;
 }
 
 #animateL {
-	color: $accent1000;
+	// color: $accent1000;
+	color: $imageGreen;
 }
 #animateE{
-	color: $accent900;
+	// color: $accent900;
+	color: $imageGreen;
 }
 #animateT{
-	color: $accent800;
+	// color: $accent800;
+	color: $imageGreen;
 }
 #animateappost{
-	color: $accent700;
+	// color: $accent700;
+	color: $imageGreen;
 }
 #animateS{
-	color: $accent700;
+	// color: $accent700;
+	color: $imageGreen;
 }
 #animateBr {
 	height: 1.5rem;
 	width: 1rem;
 }
 #animateG{
-	color: $accent800;
+	// color: $accent800;
+	color: $imageGreen;
 }
 #animateO{
-	color: $accent900;
+	// color: $accent900;
+	color: $imageGreen;
 }
 #animateexclaim{
-	color: $accent1000;
+	// color: $accent1000;
+	color: $imageGreen;
 }
 
 //Trip plan results
 .trip-plan {
-	background-color: $secondary500;
+	background-color: $primary200;
 	padding: 10px;
 	margin: 0 0 20px 0;
     display: flex;
@@ -252,8 +269,12 @@ input:-webkit-autofill{
 .btn {
 	padding: 5px;
 	border: 2px solid black;
-	background-color: $neutral200;
-	color: $accent800;
+	background-color: $primary500;
+	color: $neutral1000;
+
+	&:hover {
+		background-color: $accent200;
+	}
 }
 
 #weatherIcon {
