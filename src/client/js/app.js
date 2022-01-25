@@ -34,7 +34,6 @@ import { resetAllTripPlans } from './resetTripPlans.js';
 */
 function submitTripInfoForm(e){
 	e.preventDefault();
-	// console.log("Enter submitTripInfoForm()");
 	resetAllTripPlans();
 	// Get user input
 	const tripDestination = document.getElementById('tripDestination').value;
@@ -43,7 +42,6 @@ function submitTripInfoForm(e){
 	// Validate user input for blanks
 	const inputsPresent = validateInputs(tripDestination, tripStartDate);
 	if (inputsPresent.valid) {
-		// console.log(inputsPresent.msg);
 
 		// Date handling
 		const currDate = new Date();
@@ -52,9 +50,8 @@ function submitTripInfoForm(e){
 
 		//Validate trip start date is bigger the current Date
 		const validDepartureDate = validateFutureDate(futureDate, currDate);
-		if (validDepartureDate) {
-			// console.log('Trip start date is bigger than current Date');
 
+		if (validDepartureDate) {
 			// Compile tripData
 			let tripData = { departDate: futureDate,
 						currentDate: currDate,
@@ -65,13 +62,11 @@ function submitTripInfoForm(e){
 		}
 		else {
 			alert("Select a future date for derparture date");
-			// console.log("Something went wrong");
 		}
 
 	}
 	else{
 		alert(inputsPresent.msg);
-		// console.log(inputsPresent.msg);
 	}
 }
 
@@ -81,10 +76,7 @@ function submitTripInfoForm(e){
 */
 function addEvents(){
 	console.log("Enter addEvents()");
-	// const generatePlan = document.getElementById('generatePlan');
-	// generatePlan.addEventListener('click', submitTripInfoForm);
 }
-// generatePlan.addEventListener('click', submitTripInfoForm);
 
 
 /*
