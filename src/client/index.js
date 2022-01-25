@@ -4,12 +4,13 @@
 import (/*webpackPreload: true*/'./styles/main.scss');
 
 // import js scripts
-// import { addEvents, submitTripInfoForm } from './js/app.js';
 import { submitTripInfoForm } from './js/app.js';
-// import { submitTripInfoForm } from './js/app.js';
+
+//import images
 import './media/images/defaultImg1.jpg';
 import templateImg1 from './media/images/templateImg1.jpg';
 
+//import animations
 import {lAnimation} from './js/mojsAni.js';
 import {eAnimation} from './js/mojsAni.js';
 import {tAnimation} from './js/mojsAni.js';
@@ -20,7 +21,8 @@ import {oAnimation} from './js/mojsAni.js';
 import {exclaimAnimation} from './js/mojsAni.js';
 import {spaceAnimation} from './js/mojsAni.js';
 
-// console.log(validateInputs);
+
+//Add event listeners
 document.addEventListener('DOMContentLoaded', function () {
     console.log('the DOM is ready to be interacted with!');
 });
@@ -31,7 +33,6 @@ destinationImage.src = templateImg1;
 const generatePlan = document.getElementById('generatePlan');
 generatePlan.addEventListener('click', submitTripInfoForm);
 
-// const animationBtn = document.getElementById("animationBtn");
 generatePlan.addEventListener('click', function(){
 	lAnimation.play();
 	eAnimation.play();
@@ -46,7 +47,4 @@ generatePlan.addEventListener('click', function(){
 
 alert("Hi there!");
 
-// addEvents();
-// export { addEvents,
-// 		 submitTripInfoForm };
 export { submitTripInfoForm };
