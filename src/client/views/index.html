@@ -9,9 +9,7 @@
 	<!-- TODO: Add keywords for search engine -->
 	<meta name="keywords" content="">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<!-- <link rel="stylesheet" type="text/css" href="../styles/main.css"> -->
 	<title>Capstone Travel Planner App</title>
-	<!-- TODO: Create and add a fevicon in .ico format-->
 	<link rel="icon" href="">
 	<!-- FB open graph protocal markup -->
 	<meta property="og:title" content="Capstone Travel App">
@@ -28,15 +26,7 @@
 <body>
 	<!-- This HTML follows BEM [block]__[element]--[modifier] class naming convention-->
 	<!-- use some-thesis instead of somethesis for class names -->
-	<!-- <header class="page__header">
-		<nav class="navbar__menu">
-			<ul class="navbar__list">
-				< TODO: Add nav bar items>
-			</ul>
-		</nav>
-	</header> -->
 
-	<!-- Move to header section if no nav bar is needed -->
 	<header class="page__header main__hero">
 		<h1>Travel Planner</h1>
 	</header>
@@ -54,8 +44,8 @@
 				<input type="date" min="2021-01-01" onfocus="this.min=new Date().toISOString().split('T')[0]" name="tripStartDate" id="tripStartDate"> <br><br>
 				<input type="submit" value="Let's Plan!" class="btn btn--sub" id="generatePlan">
 			</form>
+
 			<div class="trip-info__animation">
-				<!-- <button class="btn" style="display: none;" id="animationBtn">Click</button> -->
 				<p id="animateL" class="animeText">L</p>
 				<p id="animateE" class="animeText">E</p>
 				<p id="animateT" class="animeText">T</p>
@@ -86,12 +76,9 @@
 				<!-- Weather at destination -->
 				<div class="trip-plan__weather hide">
 					<p>Typical weather for then is:</p>
-					<!-- TODO: Add trip min and max temps -->
 					<p id="tempRange"> High: <span id="tempHigh"></span>, Low: <span id="tempLow"></span></p>
-					<!-- TODO: Add trip sun/cloud prospects -->
 					<div class="weather__flex">
 						<p id="weatherText"></p>
-						<!-- <br> <br> -->
 						<img id="weatherIcon" src="" alt="Weather icon">
 					</div>
 				</div>
@@ -115,9 +102,5 @@
 		</section>
 	</footer>
 
-	<!-- ADD apps script -->
-	<!-- <script type="text/javascript" src="../js/app.js"></script> -->
-	<!-- <script type="text/javascript" src="../../../dist/main.js"></script> -->
-	<!-- <script type="text/javascript" src="../js/loadtest.js"></script> -->
 </body>
 </html>
