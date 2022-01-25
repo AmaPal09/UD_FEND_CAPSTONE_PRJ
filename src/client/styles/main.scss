@@ -40,7 +40,6 @@
 .main__hero {
 	background-color: $accent500;
 	padding: 10px;
-	// margin: 0px 0 20px 0;
 }
 
 h1 {
@@ -58,7 +57,6 @@ h1 {
     position: fixed;
     bottom: 0;
     width: 100%;
-    // margin-top: 10px;
 }
 
 footer {
@@ -87,14 +85,6 @@ footer {
 	background-color: $primary200;
 	padding: 10px;
 	margin: 20px 0 20px 0;
-	// display: flex;
-	// flex-direction: column;
-	// @include respond-screen-size("medium") {
-	// 	flex-direction: row;
-	// }
-	// @include respond-screen-size("large") {
-	// 	flex-direction: row;
-	// }
 	display: grid;
 	grid-template-rows: auto;
 	@include respond-screen-size("medium") {
@@ -110,14 +100,9 @@ input {
 	outline: 0;
 	background: transparent;
 	border-bottom: 2px solid black;
-	// &:focus {
-	// 	background-color: $neutral200;
-	// 	color: $accent800;
-	// }
 
 	&::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
 	color: black;
-	// border: none;
 	}
 
 	&:-ms-input-placeholder { /* Internet Explorer 10-11 */
@@ -178,23 +163,18 @@ input:-webkit-autofill{
 }
 
 #animateL {
-	// color: $accent1000;
 	color: $imageGreen;
 }
 #animateE{
-	// color: $accent900;
 	color: $imageGreen;
 }
 #animateT{
-	// color: $accent800;
 	color: $imageGreen;
 }
 #animateappost{
-	// color: $accent700;
 	color: $imageGreen;
 }
 #animateS{
-	// color: $accent700;
 	color: $imageGreen;
 }
 #animateBr {
@@ -202,15 +182,12 @@ input:-webkit-autofill{
 	width: 1rem;
 }
 #animateG{
-	// color: $accent800;
 	color: $imageGreen;
 }
 #animateO{
-	// color: $accent900;
 	color: $imageGreen;
 }
 #animateexclaim{
-	// color: $accent1000;
 	color: $imageGreen;
 }
 
