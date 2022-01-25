@@ -161,8 +161,6 @@ const processWeatherData = (apiRes, daysToGo, departISODate) => {
 					if (apiRes.response.data[i].valid_date === departISODate) {
 						weaData.found = true;
 						weaData.MSG = "weather record found for trip location and date."
-						// weaData.weather = apiRes.response.data[i];
-						// console.log(apiRes.response.data[i]);
 						weaData.weather = { };
 						weaData.weather.high_temp =
 									apiRes.response.data[i].high_temp;
@@ -172,7 +170,6 @@ const processWeatherData = (apiRes, daysToGo, departISODate) => {
 							apiRes.response.data[i].weather.description;
 						weaData.weather.weaIcon =
 							apiRes.response.data[i].weather.icon;
-						// console.log(weaData);
 						return weaData;
 					}
 				}
@@ -302,29 +299,27 @@ const processRestCountriesData = (apiRes) => {
 			couData.couDtl = {};
 			return couData;
 		}
-
+		//Location found
 		else {
 			couData.found = true;
 			couData.MSG = "Details found for country";
 
-
 			let cntDtl = apiRes.response[0];
-			couData.couDtl = {};
 
+			couData.couDtl = {};
 			couData.couDtl.officalNme = cntDtl.name.official;
 			couData.couDtl.continent = cntDtl.continents;
 			couData.couDtl.population = cntDtl.population;
 			couData.couDtl.region = cntDtl.subregion;
 			couData.couDtl.currency = []
-
 			let tempCurrArr = Object.values(cntDtl.currencies);
 			for (let i = 0; i < tempCurrArr.length; i++) {
 				couData.couDtl.currency.push(tempCurrArr[0].name);
 			}
-
 			couData.couDtl.capital = cntDtl.capital;
 			couData.couDtl.languages = Object.values(cntDtl.languages);
 			couData.couDtl.flags = cntDtl.flag;
+
 			return couData;
 		}
 	}
@@ -335,7 +330,6 @@ const processRestCountriesData = (apiRes) => {
 		couData.couDtl = {};
 		return couData;
 	}
-
 }
 
 
@@ -402,7 +396,7 @@ const postTrip = async (req,res)=> {
 
 	//Get images from pixabay
 	const pixabayAPIresponse = await fetchPixabay(
-												tripDta.geoNmeDtls.geoDtl.name);
+											tripDta.geoNmeDtls.geoDtl.name);
 	tripDta.pixBayDtls = await processImageData(
 										pixabayAPIresponse,
 										tripDta.geoNmeDtls.geoDtl.countryName);
@@ -411,6 +405,7 @@ const postTrip = async (req,res)=> {
 	const restCountriesAPIresponse = await fetchRestCountries(
 										tripDta.geoNmeDtls.geoDtl.countryName);
 	tripDta.rstCntyDtls = processRestCountriesData(restCountriesAPIresponse);
+
 	//Send trip data as a response to this post request
 	res.send(tripDta);
 }
