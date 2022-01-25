@@ -31,9 +31,7 @@ const lAnimation = new mojs.Html({
 		30: 60,
 		duration: 8000,
 		speed: 5,
-	  	// repeat: 1,
 	  	easing: 'sin.inout',
-	  	// isYoyo: true,
 	},
 	y: {
 		0: -20,
@@ -48,11 +46,8 @@ const lAnimation = new mojs.Html({
 		0: 360,
 		duration: 8000,
 		speed: 5,
-		// repeat: 1,
 		easing: 'back.inout',
 	},
-  	// backwardEasing: 'sin.in',
-  	// isYoyo: false
 }).play();
 
 //Animate E
