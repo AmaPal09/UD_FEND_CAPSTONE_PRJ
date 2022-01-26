@@ -26,7 +26,7 @@ const resetAllTripPlans = () => {
 */
 const hideTripPlanSection = () => {
 	document.getElementsByClassName("trip-plan")[0].classList.add('hide');
-}
+};
 
 
 /* hideTripPlanImages FUNCTION
@@ -36,7 +36,7 @@ const hideTripPlanSection = () => {
 */
 const hideTripPlanImages = () => {
 	document.getElementsByClassName("trip-plan__images")[0].classList.add('hide');
-}
+};
 
 
 /* hideTripPlanCountdown FUNCTION
@@ -46,7 +46,7 @@ const hideTripPlanImages = () => {
 */
 const hideTripPlanCountdown = () => {
 	document.getElementsByClassName("trip-plan__countdown")[0].classList.add('hide');
-}
+};
 
 
 /* hideTripPlanWeather FUNCTION
@@ -56,7 +56,7 @@ const hideTripPlanCountdown = () => {
 */
 const hideTripPlanWeather = () => {
 	document.getElementsByClassName("trip-plan__weather")[0].classList.add('hide');
-}
+};
 
 
 /* hideTripDestCountryDtls FUNCTION
@@ -66,7 +66,7 @@ const hideTripPlanWeather = () => {
 */
 const hideTripDestCountryDtls = () => {
 	document.getElementsByClassName("trip-plan__country-details")[0].classList.add('hide');
-}
+};
 
 
 export{resetAllTripPlans ,
@@ -74,4 +74,4 @@ export{resetAllTripPlans ,
 		hideTripPlanImages ,
 		hideTripPlanCountdown ,
 		hideTripPlanWeather ,
-		hideTripDestCountryDtls }
+		hideTripDestCountryDtls };
