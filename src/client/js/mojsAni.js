@@ -201,9 +201,8 @@ const oAnimation = new mojs.Html({
 	rotateY:  {
 		0: 360,
 		duration: 8000,
-		speed: 15,
+		speed: 5,
 		easing: 'back.inout',
-		repeat: 4,
 	},
 }).play();
 
@@ -228,9 +227,8 @@ const exclaimAnimation = new mojs.Html({
 	rotateY:  {
 		0: 360,
 		duration: 4000,
-		speed: 10,
+		speed: 5,
 		easing: 'back.inout',
-		repeat: 2,
 	},
 }).play();
 
@@ -255,7 +253,7 @@ const spaceAnimation = new mojs.Html({
 	rotateY:  {
 		0: 360,
 		duration: 8000,
-		speed: 15,
+		speed: 5,
 		easing: 'back.inout',
 	},
 }).play();
