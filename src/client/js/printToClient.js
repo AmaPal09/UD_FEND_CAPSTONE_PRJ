@@ -19,7 +19,7 @@ import { hideTripPlanSection ,
 * @param: {object} pixImgDtls: Details of images to be posted
 * @returns: NA
 */
-function printTripPlanImages(pixImgDtls) {
+const printTripPlanImages = (pixImgDtls) => {
 	if(pixImgDtls.found) {
 		//TODO: Once loading of file from images is successful, uncomment below lines, remove current attribute set-up
 		document.getElementById("destinationImage").setAttribute("src",
@@ -38,7 +38,7 @@ function printTripPlanImages(pixImgDtls) {
 * @param: {object} tripDetails: Details of trip to be posted
 * @returns: NA
 */
-function printTripPlanCountdown(tripDetails) {
+const printTripPlanCountdown = (tripDetails) => {
 	if (tripDetails.geoNmeDtls.found) {
 		document.getElementById("tripLoc").innerText =
 						`${tripDetails.geoNmeDtls.geoDtl.name}, ` +
@@ -61,7 +61,7 @@ function printTripPlanCountdown(tripDetails) {
 * @param: {object} tripDetails: Details of trip to be posted
 * @returns: NA
 */
-function printTripPlanWeather(weaDtls) {
+const printTripPlanWeather = (weaDtls) => {
 
 	if (weaDtls.found) {
 		document.getElementById("tempHigh").innerText =
@@ -95,7 +95,7 @@ function printTripPlanWeather(weaDtls) {
 * @param: {object} ctyDtls: Details of destination country
 * @returns: NA
 */
-function printTripDestCountryDtls(ctyDtls) {
+const printTripDestCountryDtls = (ctyDtls) => {
 
 	if (ctyDtls.found) {
 		console.log(ctyDtls.couDtl.continent);
@@ -158,7 +158,7 @@ function printTripDestCountryDtls(ctyDtls) {
 * @param: NA
 * @returns: NA
 */
-function showTripPlanSection() {
+const showTripPlanSection = () => {
 	document.getElementsByClassName("trip-plan")[0].classList.remove('hide');
 }
 
@@ -168,7 +168,7 @@ function showTripPlanSection() {
 * @param: NA
 * @returns: NA
 */
-function showTripPlanImages() {
+const showTripPlanImages = () => {
 	document.getElementsByClassName("trip-plan__images")[0].classList.remove('hide');
 }
 
@@ -178,7 +178,7 @@ function showTripPlanImages() {
 * @param: NA
 * @returns: NA
 */
-function showTripPlanCountdown() {
+const showTripPlanCountdown = () => {
 	document.getElementsByClassName("trip-plan__countdown")[0].classList.remove('hide');
 }
 
@@ -188,7 +188,7 @@ function showTripPlanCountdown() {
 * @param: NA
 * @returns: NA
 */
-function showTripPlanWeather() {
+const showTripPlanWeather = () => {
 	document.getElementsByClassName("trip-plan__weather")[0].classList.remove('hide');
 }
 
@@ -198,7 +198,7 @@ function showTripPlanWeather() {
 * @param: NA
 * @returns: NA
 */
-function showTripDestCountryDtls() {
+const showTripDestCountryDtls = () => {
 	document.getElementsByClassName("trip-plan__country-details")[0].classList.remove('hide');
 }
 
@@ -210,7 +210,7 @@ function showTripDestCountryDtls() {
 * @param: {object} tripDetails: Details of trip to be posted
 * @returns: NA
 */
-function printTripDetails(tripDetails) {
+const printTripDetails = (tripDetails) => {
 
 	console.log("Enter printTripDetails()");
 	console.log(tripDetails);
