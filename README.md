@@ -6,7 +6,6 @@
 * [Demo](#demo)
 * [Usage](#usage)
 * [Testing](#testing)
-* [Required Enhancements](#required-enhancements)
 * [Extra Enhancements (Optional)](#Extra-Enhancements)
 * [References](#Reference-material)
 
@@ -24,7 +23,21 @@
 
 
 ## Project Requirements
-### [Project Requirements rubics can be found here](https://review.udacity.com/#!/rubrics/3636/view)
+### Required Enhancements
+Required features as a part of the project Rubic
+- [x] Architecture: Files split in structured directories that come together to render clear homepage.
+- [x] Webpack config should contain atleast 3 scripts
+- [x] Atleast one test
+- [ ] Project must have service workers installed
+- [x] Features must run across moder desktop, tablet and phone browser
+- [x] Interactive elements with hover state
+- [x] Properly indented HTML structure with classes and ID's
+- [x] New visual design (Different from previous projects)
+- [x] Atelast one event listner present
+- [x] README file should be included
+- [x] Comments present where explanation is necessary
+- [x] Code is formatted with consistent easy to read formatting as per Udacity Style guides
+
 
 
 ## Demo
@@ -79,22 +92,6 @@ Please see Usage Section
 	```
 		npm run test
 	```
-
-
-## Required Enhancements
-Required features as a part of the project Rubic
-- [x] Architecture: Files split in structured directories that come together to render clear homepage.
-- [x] Webpack config should contain atleast 3 scripts
-- [x] Atleast one test
-- [ ] Project must have service workers installed
-- [x] Features must run across moder desktop, tablet and phone browser
-- [x] Interactive elements with hover state
-- [x] Properly indented HTML structure with classes and ID's
-- [x] New visual design (Different from previous projects)
-- [x] Atelast one event listner present
-- [x] README file should be included
-- [x] Comments present where explanation is necessary
-- [x] Code is formatted with consistent easy to read formatting as per Udacity Style guides
 
 
 ## Extra Enhancements (Optional)
