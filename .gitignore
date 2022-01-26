@@ -8,3 +8,4 @@ src/.DS_Store
 src/client/.DS_Store
 coverage/
 test.sh
+mojsAni_test.js
