@@ -20,16 +20,18 @@ import { hideTripPlanSection ,
 * @returns: NA
 */
 const printTripPlanImages = (pixImgDtls) => {
+	//If image was found by the server
 	if(pixImgDtls.found) {
-		//TODO: Once loading of file from images is successful, uncomment below lines, remove current attribute set-up
 		document.getElementById("destinationImage").setAttribute("src",
 									pixImgDtls.imageDetails.webformatURL);
 	}
+	//Else use stock image
 	else {
 		document.getElementById("destinationImage").setAttribute("src", 												`./images/defaultImg1.jpg`);
 	}
+	//Call to display the image div
 	showTripPlanImages();
-}
+};
 
 
 /*
@@ -39,19 +41,24 @@ const printTripPlanImages = (pixImgDtls) => {
 * @returns: NA
 */
 const printTripPlanCountdown = (tripDetails) => {
+	//Validate if geoNames details were found by the server
 	if (tripDetails.geoNmeDtls.found) {
 		document.getElementById("tripLoc").innerText =
 						`${tripDetails.geoNmeDtls.geoDtl.name}, ` +
 						`${tripDetails.geoNmeDtls.geoDtl.countryName}`;
 	}
+	//Else use destination provided by the user
 	else {
 		alert("Geonames could not find this location. Please verify that your destination is correct to obtain weather and country details");
 		document.getElementById("tripLoc").innerText = tripDetails.destination;
 	}
 
+	//Load days left for the trip
 	document.getElementById("tripDaysToGo").innerText = tripDetails.daysToGo;
+
+	//Call to show countdown div
 	showTripPlanCountdown();
-}
+};
 
 
 /*
@@ -62,7 +69,7 @@ const printTripPlanCountdown = (tripDetails) => {
 * @returns: NA
 */
 const printTripPlanWeather = (weaDtls) => {
-
+	//Validate if weather details were found by the server
 	if (weaDtls.found) {
 		document.getElementById("tempHigh").innerText =
 											`${weaDtls.weather.high_temp}`;
@@ -74,8 +81,10 @@ const printTripPlanWeather = (weaDtls) => {
 										`${weaDtls.weather.weaIcon}.png`;
 		console.log(weatherIconSrc);
 		document.getElementById("weatherIcon").setAttribute("src", 																weatherIconSrc);
+		//Call to show weather details div
 		showTripPlanWeather();
 	}
+	//When no weather details were found by the server
 	else {
 		if (weaDtls.MSG == "Forcast for this date is not available. Please check upto 16 days before the trip") {
 			alert("Forcast for this date is not available. Please check upto 16 days before the trip");
@@ -84,9 +93,10 @@ const printTripPlanWeather = (weaDtls) => {
 		document.getElementById("tempLow").innerText = '';
 		document.getElementById("weatherText").innerText = '';
 		document.getElementById("weatherIcon").setAttribute("src", '');
+		//Call to hide weather details div
 		hideTripPlanWeather();
 	}
-}
+};
 
 
 /*
@@ -96,12 +106,14 @@ const printTripPlanWeather = (weaDtls) => {
 * @returns: NA
 */
 const printTripDestCountryDtls = (ctyDtls) => {
-
+	//Validate if Rest country details were found by the server
 	if (ctyDtls.found) {
-		console.log(ctyDtls.couDtl.continent);
 		let descPara = ''
+
+		//Load offical name and population
 		descPara = `Officially known as ${ctyDtls.couDtl.officalNme}, it has a population of ${ctyDtls.couDtl.population}.`;
 
+		//Load continent details
 		if (ctyDtls.couDtl.continent.length > 1) {
 			let contiString = ctyDtls.couDtl.continent.toString();
 			descPara = descPara + ` It is located on the continents of ` +
@@ -111,6 +123,7 @@ const printTripDestCountryDtls = (ctyDtls) => {
 			descPara = descPara + ` It is located on the continent of ${ctyDtls.couDtl.continent[0]} in the ${ctyDtls.couDtl.region} region.`;
 		}
 
+		//Load capital details
 		if (ctyDtls.couDtl.capital.length > 1) {
 			let contiString = ctyDtls.couDtl.capital.toString();
 			descPara = descPara + ` It's capital cities are ` +
@@ -121,6 +134,7 @@ const printTripDestCountryDtls = (ctyDtls) => {
 						`${ctyDtls.couDtl.capital[0]}.`;
 		}
 
+		//Load currency details
 		if (ctyDtls.couDtl.currency.length > 1) {
 			let contiString = ctyDtls.couDtl.currency.toString();
 			descPara = descPara + ` Currencies accepted here are ` +
@@ -131,6 +145,7 @@ const printTripDestCountryDtls = (ctyDtls) => {
 						`${ctyDtls.couDtl.currency[0]}.`;
 		}
 
+		//Load language details
 		if (ctyDtls.couDtl.languages.length > 1) {
 			let contiString = ctyDtls.couDtl.languages.toString();
 			descPara = descPara + ` Official languages spoken here are ` +
@@ -141,16 +156,21 @@ const printTripDestCountryDtls = (ctyDtls) => {
 						`${ctyDtls.couDtl.languages[0]}.`;
 		}
 
+		//Load flag
 		descPara = descPara + ` Its flag is ${ctyDtls.couDtl.flags}.`
 
 		document.getElementById("cntryDtls").innerText = descPara;
+
+		//Call to show country details
 		showTripDestCountryDtls()
 	}
+	//No REST country details are found by server
 	else {
 		document.getElementById("cntryDtls").innerText = '';
+		//Call to hide country details
 		hideTripDestCountryDtls()
 	}
-}
+};
 
 
 /* showTripPlanSection FUNCTION
@@ -160,7 +180,7 @@ const printTripDestCountryDtls = (ctyDtls) => {
 */
 const showTripPlanSection = () => {
 	document.getElementsByClassName("trip-plan")[0].classList.remove('hide');
-}
+};
 
 
 /* showTripPlanImages FUNCTION
@@ -170,7 +190,7 @@ const showTripPlanSection = () => {
 */
 const showTripPlanImages = () => {
 	document.getElementsByClassName("trip-plan__images")[0].classList.remove('hide');
-}
+};
 
 
 /* showTripPlanCountdown FUNCTION
@@ -180,7 +200,7 @@ const showTripPlanImages = () => {
 */
 const showTripPlanCountdown = () => {
 	document.getElementsByClassName("trip-plan__countdown")[0].classList.remove('hide');
-}
+};
 
 
 /* showTripPlanWeather FUNCTION
@@ -190,7 +210,7 @@ const showTripPlanCountdown = () => {
 */
 const showTripPlanWeather = () => {
 	document.getElementsByClassName("trip-plan__weather")[0].classList.remove('hide');
-}
+};
 
 
 /* showTripDestCountryDtls FUNCTION
@@ -200,7 +220,7 @@ const showTripPlanWeather = () => {
 */
 const showTripDestCountryDtls = () => {
 	document.getElementsByClassName("trip-plan__country-details")[0].classList.remove('hide');
-}
+};
 
 
 /*
@@ -220,7 +240,7 @@ const printTripDetails = (tripDetails) => {
 	printTripDestCountryDtls(tripDetails.rstCntyDtls);
 	showTripPlanSection();
 
-}
+};
 
 
 /*
