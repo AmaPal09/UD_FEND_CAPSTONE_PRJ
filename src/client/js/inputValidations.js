@@ -17,12 +17,15 @@ const validateInputs = (destination, date) => {
 
 	const result = {};
 
+	//Validate if any input is blank
 	if (destination == "" || date == "") {
+		//Validate if both inputs are blank
 		if(destination == "" && date == ""){
 			result['msg'] = "Enter a destination and select a date";
 			result['valid'] = false;
 			return result;
 		}
+		//Validate which of the 2 inputs are blank
 		else if(destination == ""){
 			result['msg'] = "Enter a destination";
 			result['valid'] = false;
@@ -34,12 +37,13 @@ const validateInputs = (destination, date) => {
 			return result;
 		}
 	}
+	//All inputs provided
 	else {
 		result['valid'] = true;
 		result['msg'] = 'All OK';
 		return result;
 	}
-}
+};
 
 
 /*
@@ -51,13 +55,14 @@ const validateInputs = (destination, date) => {
 */
 const validateFutureDate = (fDate, cDate) => {
 
+	//See if the trip date is bigger than the current date
 	if (fDate.getTime() > cDate.getTime()){
 		return true;
 	}
 	else {
 		return false;
 	}
-}
+};
 
 
 /*
