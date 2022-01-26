@@ -10,7 +10,7 @@
 * @param: NA
 * @returns: NA
 */
-function resetAllTripPlans() {
+const resetAllTripPlans = () => {
 	hideTripPlanSection();
 	hideTripPlanImages();
 	hideTripPlanCountdown();
@@ -24,7 +24,7 @@ function resetAllTripPlans() {
 * @param: NA
 * @returns: NA
 */
-function hideTripPlanSection() {
+const hideTripPlanSection = () => {
 	document.getElementsByClassName("trip-plan")[0].classList.add('hide');
 }
 
@@ -34,7 +34,7 @@ function hideTripPlanSection() {
 * @param: NA
 * @returns: NA
 */
-function hideTripPlanImages() {
+const hideTripPlanImages = () => {
 	document.getElementsByClassName("trip-plan__images")[0].classList.add('hide');
 }
 
@@ -44,7 +44,7 @@ function hideTripPlanImages() {
 * @param: NA
 * @returns: NA
 */
-function hideTripPlanCountdown() {
+const hideTripPlanCountdown = () => {
 	document.getElementsByClassName("trip-plan__countdown")[0].classList.add('hide');
 }
 
@@ -54,7 +54,7 @@ function hideTripPlanCountdown() {
 * @param: NA
 * @returns: NA
 */
-function hideTripPlanWeather() {
+const hideTripPlanWeather = () => {
 	document.getElementsByClassName("trip-plan__weather")[0].classList.add('hide');
 }
 
@@ -64,7 +64,7 @@ function hideTripPlanWeather() {
 * @param: NA
 * @returns: NA
 */
-function hideTripDestCountryDtls() {
+const hideTripDestCountryDtls = () => {
 	document.getElementsByClassName("trip-plan__country-details")[0].classList.add('hide');
 }
 
