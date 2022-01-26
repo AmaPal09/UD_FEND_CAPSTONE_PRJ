@@ -68,7 +68,7 @@ const submitTripInfoForm = (e) => {
 	else{
 		alert(inputsPresent.msg);
 	}
-}
+};
 
 
 /*
@@ -76,7 +76,7 @@ const submitTripInfoForm = (e) => {
 */
 const addEvents = () => {
 	console.log("Enter addEvents()");
-}
+};
 
 
 /*
