@@ -22,10 +22,10 @@ import { printTripDetails } from './printToClient.js';
 */
 const postData = async(url='', data={}) => {
 
-
-	console.log("Enter postData()");
-	console.log("URL is: ", url);
-	console.log("Data is: ", data);
+	// console.log("Enter postData()");
+	// console.log("URL is: ", url);
+	// console.log("Data is: ", data);
+	//Fetch from server
 	const response = await fetch(url, {
 		method: 'POST',
 		credentials: 'same-origin',
@@ -41,7 +41,7 @@ const postData = async(url='', data={}) => {
 	}catch(error){
 		console.log("error: ", error);
 	}
-}
+};
 
 
 /*
@@ -58,7 +58,7 @@ const postAndPrintTrip = async(tripData) => {
 	// const results = await postData("/postTrip", tripData);
 	const results = await postData("http://localhost:3100/postTrip", tripData);
 	printTripDetails(results);
-}
+};
 
 
 /*
