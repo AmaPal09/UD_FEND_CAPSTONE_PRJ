@@ -32,7 +32,7 @@ import { resetAllTripPlans } from './resetTripPlans.js';
 * @param: {DOM Event} e: DOM event for click on form submit button
 * @returns: NA
 */
-function submitTripInfoForm(e){
+const submitTripInfoForm = (e) => {
 	e.preventDefault();
 	resetAllTripPlans();
 	// Get user input
@@ -74,7 +74,7 @@ function submitTripInfoForm(e){
 /*
 * E V E N T   L I S T E N E R S
 */
-function addEvents(){
+const addEvents = () => {
 	console.log("Enter addEvents()");
 }
 
