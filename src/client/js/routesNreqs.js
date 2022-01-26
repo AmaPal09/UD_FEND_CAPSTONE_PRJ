@@ -51,7 +51,7 @@ const postData = async(url='', data={}) => {
 * @param: {object} tripData: Trip data provided by the user
 * @returns: NA
 */
-async function postAndPrintTrip(tripData) {
+const postAndPrintTrip = async(tripData) => {
 
 	console.log("Enter tripData()");
 	//TODO: Fix before submiting. Done for ease of compilation
