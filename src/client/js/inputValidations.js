@@ -13,7 +13,7 @@
 * @param: {string} date: Trip start date from user
 * @returns: {object} results: Contains Boolean value for if user provided some * 							 input and error messages
 */
-function validateInputs(destination, date){
+const validateInputs = (destination, date) => {
 
 	const result = {};
 
@@ -49,7 +49,7 @@ function validateInputs(destination, date){
 * @param: {date} cdate: Current date from browser
 * @returns: {Boolean}: true or false
 */
-function validateFutureDate(fDate, cDate) {
+const validateFutureDate = (fDate, cDate) => {
 
 	if (fDate.getTime() > cDate.getTime()){
 		return true;
