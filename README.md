@@ -98,7 +98,7 @@ Required features as a part of the project Rubic
 
 
 ## Extra Enhancements (Optional)
-- [] Add end date and display trip length.
+- [ ] Add end date and display trip length.
 - [x] Pull image for country from Pixabay API when entered location brings up no results.
 - [ ] Allow user to add multiple destinations on the same trip.
 	- [ ] Pull in weather for additional locations.
